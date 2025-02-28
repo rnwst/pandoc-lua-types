@@ -377,7 +377,7 @@ function Inlines:walk(filter) end
 pandoc = {}
 
 ---Returns new Pandoc document.
----@param blocks (Blocks | (Block | string)[] | Inline | string)
+---@param blocks (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)
 ---@param meta? Meta
 ---@return Pandoc
 pandoc.Pandoc = function(blocks, meta) end
@@ -410,13 +410,13 @@ pandoc.CodeBlock = function(text, attr) end
 -- TBD: DefinitionList
 
 ---Creates a Div block-level element.
----@param content (Blocks | (Block | string)[] | Inline | string) block content
+---@param content (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) block content
 ---@param attr? Attr element attributes
 ---@return Div
 pandoc.Div = function(content, attr) end
 
 ---Creates a Figure block-level element.
----@param content (Blocks | (Block | string)[] | Inline | string) figure block content
+---@param content (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) figure block content
 ---@param caption Caption figure caption
 ---@param attr? Attr element attributes
 ---@return Figure
@@ -424,7 +424,7 @@ pandoc.Figure = function(content, caption, attr) end
 
 ---Creates a Header block-level element.
 ---@param level integer heading level
----@param content (Inlines | (Inline | string)[] | Inline | string) inline content
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
 ---@param attr? Attr element attributes
 ---@return Header
 pandoc.Header = function(level, content, attr) end
@@ -436,12 +436,12 @@ pandoc.Header = function(level, content, attr) end
 -- TBD: OrderedList
 
 ---Creates a Para block-level element.
----@param content (Inlines | (Inline | string)[] | Inline | string) inline content
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
 ---@return Para
 pandoc.Para = function(content) end
 
 ---Creates a Plain block-level element.
----@param content (Inlines | (Inline | string)[] | Inline | string) inline content
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
 ---@return Plain
 pandoc.Plain = function(content) end
 
@@ -462,7 +462,7 @@ pandoc.RawBlock = function(format, text) end
 pandoc.Table = function(caption, colspecs, head, bodies, foot, attr) end
 
 ---Creates a list of Blocks.
----@param block_like_elements (Blocks | (Block | string)[] | Inline | string) list where each element can be treated as a Block, or a single such value
+---@param block_like_elements (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) list where each element can be treated as a Block, or a single such value
 ---@return Blocks
 pandoc.Blocks = function(block_like_elements) end
 
@@ -477,7 +477,7 @@ pandoc.Code= function(code, attr) end
 -- TBD: Emph
 
 ---Creates an Image inline element.
----@param caption (Inlines | (Inline | string)[] | Inline | string) text used to describe the image
+---@param caption (Inlines | Inline[] | Inline | string[] | string) text used to describe the image
 ---@param str string path to the image file
 ---@param title? string brief image description
 ---@param attr? Attr image attributes
@@ -487,7 +487,7 @@ pandoc.Image = function(caption, str, title, attr) end
 -- TBD: LineBreak
 
 ---Creates a Link inline element (usually a hyperlink).
----@param content (Inlines | (Inline | string)[] | Inline | string) text for this link
+---@param content (Inlines | Inline[] | Inline | string[] | string) text for this link
 ---@param target string the link target
 ---@param title? string brief link description
 ---@param attr? Attr link attributes
@@ -501,7 +501,7 @@ pandoc.Link = function(content, target, title, attr) end
 pandoc.Math = function(mathtype, text) end
 
 ---Creates a Note inline element. A Note is the only inline element that has block-level content.
----@param content (Blocks | (Block | string)[] | Inline | string) footnote block content
+---@param content (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) footnote block content
 ---@return Note
 pandoc.Note = function(content) end
 
@@ -522,7 +522,7 @@ pandoc.RawInline = function(format, text) end
 pandoc.Space = function() end
 
 ---Creates a Span inline element.
----@param content (Inlines | (Inline | string)[] | Inline | string) inline content
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
 ---@param attr? Attr element attributes
 ---@return Span
 pandoc.Span = function(content, attr) end
@@ -543,7 +543,7 @@ pandoc.Str = function(text) end
 -- TBD: Underline
 
 ---Creates a list of Inlines.
----@param inline_like_elements (Inlines | (Inline | string)[] | Inline | string)
+---@param inline_like_elements (Inlines | Inline[] | Inline | string[] | string)
 ---@return Inlines
 pandoc.Inlines = function(inline_like_elements) end
 
