@@ -490,7 +490,7 @@ pandoc.Image = function(caption, str, title, attr) end
 ---@param content (Inlines | (Inline | string)[] | Inline | string) text for this link
 ---@param target string the link target
 ---@param title? string brief link description
----@param attr Attr link attributes
+---@param attr? Attr link attributes
 ---@return Link
 pandoc.Link = function(content, target, title, attr) end
 
