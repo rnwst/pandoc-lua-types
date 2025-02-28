@@ -1,4 +1,4 @@
-# pandoc-luacheckrc
+# pandoc-lua-types
 
 Make writing [Pandoc](https://pandoc.org/) [Lua filters](https://pandoc.org/lua-filters.html) a pleasure by using these language server definitions for use with [`lua-language-server`](https://github.com/LuaLS/lua-language-server).
 
