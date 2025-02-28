@@ -9,3 +9,11 @@ The `pandoc-types.lua` definition file can be added to your pandoc filter git re
 ```console
 git submodule add https://github.com/rnwst/pandoc-lua-types types
 ```
+To enable `lua-language-server` to find out definition file in `./types/`, we need to create a `.luarc.json` file in the root of the project with the following contents:
+```json
+{
+  "workspace": {
+    "library": ["types"]
+  }
+}
+```
