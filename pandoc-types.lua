@@ -11,12 +11,12 @@
 ---@class Pandoc
 ---@field blocks (Blocks | Block[]) document content
 ---@field meta Meta document meta information
----@field walk fun(filter: table): Pandoc
+---@field walk fun(filter: Filter): Pandoc
 
 
 -- Meta --------------------------------------------------------------------------------------------
 
--- TBD 
+-- TBD - don't forget about `clone` method!
 ---@alias Meta table
 
 
@@ -57,7 +57,7 @@ end
 ---and to the list itself. Returns a (deep) copy on which
 ---the filter has been  applied: the original list is left
 ---untouched.
----@param filter table
+---@param filter Filter
 ---@return Blocks
 function Blocks:walk(filter) end
 
@@ -117,7 +117,7 @@ function Blocks:walk(filter) end
 -- TBD
 ---@alias OrderedList table
 
----@class Para: Element
+---@class Para
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Para'
 ---@field t 'Para'
@@ -190,7 +190,7 @@ end
 ---and to the list itself. Returns a (deep) copy on which
 ---the filter has been  applied: the original list is left
 ---untouched.
----@param filter table
+---@param filter Filter
 ---@return Inlines
 function Inlines:walk(filter) end
 
@@ -370,6 +370,26 @@ function Inlines:walk(filter) end
 ---| 'katex'
 ---| 'gladtex'
 ---| { method: ('plain' | 'mathjax' | 'mathml' | 'webtex' | 'katex' | 'gladtex'), url: string }
+
+
+-- Filters =============================================================================================================
+
+---@alias FilterTable {['traverse']: ('topdown' | 'typewise'), ['Pandoc']: PandocFilterFunction, ['Meta']: MetaFilterFunction, ['Blocks']: BlocksFilterFunction, ['Inlines']: InlinesFilterFunction, ['BlockQuote' | 'BulletList' | 'CodeBlock' | 'DefinitionList' | 'Div' | 'Figure' | 'Header' | 'HorizontalRule' | 'LineBlock' | 'OrderedList' | 'Para' | 'Plain' | 'RawBlock' | 'Table']: BlockFilterFunction,  ['Cite' | 'Code' | 'Emph' | 'Image' | 'LineBreak' | 'Link' | 'Math' | 'Note' | 'Quoted' | 'RawInline' | 'SmallCaps' | 'SoftBreak' | 'Space' | 'Span' | 'Str' | 'Strikeout' | 'Strong' | 'Subscript' | 'Superscript' | 'Underline']: InlineFilterFunction}
+
+-- I wasn't sure if this recursive definition would work, but there seem to be no complaints from lua-language-server!
+---@alias Filter (FilterTable | Filter)[]
+
+---@alias PandocFilterFunction fun(blocks: Blocks, meta: Meta): Pandoc | nil
+
+---@alias MetaFilterFunction fun(meta: Meta): Meta | nil
+
+---@alias BlocksFilterFunction fun(blocks: Blocks): Blocks | Block[] | nil
+
+---@alias InlinesFilterFunction fun(inlines: Inlines | Inline[]): Inlines | Inline[] | nil
+
+---@alias BlockFilterFunction fun(block: Block): Block | Blocks | Block[] | nil
+
+---@alias InlineFilterFunction fun(inline: Inline): Inline | Inlines | Inline[] | nil
 
 
 -- Module pandoc =======================================================================================================
