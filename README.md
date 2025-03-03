@@ -24,7 +24,7 @@ LuaLS' type checking is [not currently as capable as it could be](https://github
 
 A basic understanding of LuaLS' [type annotation syntax](https://luals.github.io/wiki/annotations/) is presumed in this section.
 
-All of Pandoc's [Block](https://pandoc.org/lua-filters.html#type-block) and [Inline](https://pandoc.org/lua-filters.html#type-inline) elements are available for type annotations. This enables static type checking when writing filter functions. For example:
+All of Pandoc's [Block](https://pandoc.org/lua-filters.html#type-block) and [Inline](https://pandoc.org/lua-filters.html#type-inline) elements are available for type annotations. Furthermore, the [`Pandoc`](https://pandoc.org/lua-filters.html#type-pandoc) and [`Meta`](https://pandoc.org/lua-filters.html#type-meta) types are available as well, and so are the various [Element component](https://pandoc.org/lua-filters.html#element-components) types. This enables static type checking when writing filter functions. For example:
 ```Lua
 ---Filter function for Spans
 ---@param span Span
@@ -47,8 +47,6 @@ function Inlines(inlines)
 end
 ```
 If you are unsure if your return value is of type `Inline[]` or `Inlines`, you can annotate it as `Inlines | Inline[]`, which covers both types.
-
-Furthermore, the [`Pandoc`](https://pandoc.org/lua-filters.html#type-pandoc) and [`Meta`](https://pandoc.org/lua-filters.html#type-meta) types are available as well.
 
 When assigning a `Block` or `Inline` type to a more specific type (such as a Span, as in the following example), the [`@as` annotation](https://luals.github.io/wiki/annotations/#as) is required to avoid a type error diagnostic:
 ```Lua
