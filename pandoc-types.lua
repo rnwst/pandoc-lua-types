@@ -61,11 +61,15 @@ end
 ---@return Blocks
 function Blocks:walk(filter) end
 
--- TBD
----@alias BlockQuote table
+---@class BlockQuote
+---@field content (Blocks | Block[]) block content
+---@field tag 'BlockQuote'
+---@field t 'BlockQuote'
 
--- TBD
----@alias BulletList table
+---@class BulletList
+---@field content (Blocks | Block[])[] list items, list of a list of block-level elements
+---@field tag 'BulletList'
+---@field t 'BulletList'
 
 ---@class CodeBlock
 ---@field text string code string
@@ -76,8 +80,10 @@ function Blocks:walk(filter) end
 ---@field tag 'CodeBlock'
 ---@field t 'CodeBlock'
 
--- TBD
----@alias DefinitionList table
+---@class DefinitionList
+---@field content [(Inlines | Inline[]), (Blocks | Block[])][] a list of tuples, where a tuple consists of a list of inline-level elements, and list of a list of block-level elements 
+---@field tag 'DefinitionList'
+---@field t 'DefinitionList'
 
 ---@class Div
 ---@field content (Blocks | Block[]) block content
@@ -108,14 +114,21 @@ function Blocks:walk(filter) end
 ---@field tag 'Header'
 ---@field t 'Header'
 
--- TBD
----@alias HorizontalRule table
+---@class HorizontalRule
+---@field tag 'HorizontalRule'
+---@field t 'HorizontalRule'
 
--- TBD
----@alias LineBlock table
+---@class LineBlock
+---@field content (Inlines | Inline[]) list of lines, i.e. list of inline elements
+---@field tag 'LineBlock'
+---@field t 'LineBlock'
 
--- TBD
----@alias OrderedList table
+---@class OrderedList
+---@field content (Blocks | Block[])[] list items, list of a list of block-level elements
+---@field listAttributes ListAttributes list parameters
+---@field start integer alias for `listAttributes.start`
+---@field style string alias for `listAttributes.style`
+---@field delimiter string alias for `listAttributes.delimiter`
 
 ---@class Para
 ---@field content (Inlines | Inline[]) inline content
@@ -318,6 +331,11 @@ function Inlines:walk(filter) end
 ---@field attributes Attributes alias for `attr.attributes`
 
 ---@alias ColSpec [Alignment, number]
+
+---@class ListAttributes
+---@field start integer number of the first list item
+---@field style ('DefaultStyle' | 'Example' | 'Decimal' | 'LowerRoman' | 'UpperRoman' | 'LowerAlpha' | 'UpperAlpha') style used for list numbers
+---@field delimiter ('DefaultDelim' | 'Period' | 'OneParen' | 'TwoParens') delimiter of list numbers
 
 ---@class Row A table row.
 ---@field attr Attr element attributes
