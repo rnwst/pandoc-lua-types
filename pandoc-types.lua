@@ -207,8 +207,11 @@ end
 ---@return Inlines
 function Inlines:walk(filter) end
 
--- TBD
----@alias Cite table
+---@class Cite
+---@field content (Inlines | Inline[]) citation content
+---@field citations Citation[] list of citations
+---@field tag 'Cite'
+---@field t 'Cite'
 
 ---@class Code
 ---@field text string code string
@@ -219,8 +222,10 @@ function Inlines:walk(filter) end
 ---@field tag 'Code'
 ---@field t 'Code'
 
--- TBD
----@alias Emph table
+---@class Emph
+---@field content (Inlines | Inline[])
+---@field tag 'Emph'
+---@field t 'Emph'
 
 ---@class Image
 ---@field caption (Inlines | Inline[]) text used to describe the image
@@ -233,8 +238,9 @@ function Inlines:walk(filter) end
 ---@field tag 'Image'
 ---@field t 'Image'
 
--- TBD
----@alias LineBreak table
+---@class LineBreak
+---@field tag 'LineBreak'
+---@field t 'LineBreak'
 
 ---@class Link
 ---@field attr Attr attributes
@@ -258,8 +264,11 @@ function Inlines:walk(filter) end
 ---@field tag 'Note'
 ---@field t 'Note'
 
--- TBD
----@alias Quoted table
+---@class Quoted
+---@field quotetype ('SingleQuote' | 'DoubleQuote')
+---@field content (Inlines | Inline[])
+---@field tag 'Quoted'
+---@field t 'Quoted'
 
 ---@class RawInline
 ---@field format string the format of the content
@@ -267,11 +276,14 @@ function Inlines:walk(filter) end
 ---@field tag 'RawInline'
 ---@field t 'RawInline'
 
--- TBD
----@alias SmallCaps table
+---@class SmallCaps
+---@field content (Inlines | Inline[]) small caps content
+---@field tag 'SmallCaps'
+---@field t 'SmallCaps'
 
--- TBD
----@alias SoftBreak table
+---@class SoftBreak
+---@filed tag 'SoftBreak'
+---@field t 'SoftBreak'
 
 ---@class Space
 ---@field tag 'Space'
@@ -290,20 +302,30 @@ function Inlines:walk(filter) end
 ---@field tag 'Str'
 ---@field text string Content
 
--- TBD
----@alias Strikeout table
+---@class Strikeout
+---@field content (Inlines | Inline[]) struck out content
+---@field tag 'Strikeout'
+---@field t 'Strikeout'
 
--- TBD
----@alias Strong table
+---@class Strong
+---@field content (Inlines | Inline[]) inline content
+---@field tag 'Strong'
+---@field t 'Strong'
 
--- TBD
----@alias Subscript table
+---@class Subscript
+---@field content (Inlines | Inline[]) inline content
+---@field tag 'Subscript'
+---@field t 'Subscript'
 
--- TBD
----@alias Superscript table
+---@class Superscript
+---@field content (Inlines | Inline[]) inline content
+---@field tag 'Superscript'
+---@field t 'Superscript'
 
--- TBD
----@alias Underline table
+---@class Underline
+---@field content (Inlines | Inline[]) inline content
+---@field tag 'Underline'
+---@field t 'Underline'
 
 
 -- Element components ------------------------------------------------------------------------------
@@ -329,6 +351,14 @@ function Inlines:walk(filter) end
 ---@field identifier string alias for `attr.identifier`
 ---@field classes string[] alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
+
+---@class Citation
+---@field id string citation identifier, e.g. a bibtex key
+---@field mode ('AuthorInText' | 'SuppressAuthor' | 'NormalCitation') citation mode
+---@field prefix (Inlines | Inline[]) citation prefix
+---@field suffix (Inlines | Inline[]) citation suffix
+---@field note_num integer note number
+---@field hash integer hash
 
 ---@alias ColSpec [Alignment, number]
 
