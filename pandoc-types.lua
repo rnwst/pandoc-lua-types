@@ -402,7 +402,7 @@ function Inlines:walk(filter) end
 ---@field standalone boolean whether the input was a standalone document with header
 ---@field strip_comments boolean whether HTML comments were stripped instead of parsed as raw HTML
 ---@field tab_stop integer width (i.e. equivalent number of spaces) of tab stops
----@field track_changes 'accept-changes' | 'reject-changes' | 'all-changes' track changes setting for docx
+---@field track_changes ('accept-changes' | 'reject-changes' | 'all-changes') track changes setting for docx
 
 ---@class WriterOptions
 ---@field number_sections boolean
@@ -422,22 +422,49 @@ function Inlines:walk(filter) end
 
 -- Filters =============================================================================================================
 
----@alias FilterTable {['traverse']: ('topdown' | 'typewise'), ['Pandoc']: PandocFilterFunction, ['Meta']: MetaFilterFunction, ['Blocks']: BlocksFilterFunction, ['Inlines']: InlinesFilterFunction, ['BlockQuote' | 'BulletList' | 'CodeBlock' | 'DefinitionList' | 'Div' | 'Figure' | 'Header' | 'HorizontalRule' | 'LineBlock' | 'OrderedList' | 'Para' | 'Plain' | 'RawBlock' | 'Table']: BlockFilterFunction,  ['Cite' | 'Code' | 'Emph' | 'Image' | 'LineBreak' | 'Link' | 'Math' | 'Note' | 'Quoted' | 'RawInline' | 'SmallCaps' | 'SoftBreak' | 'Space' | 'Span' | 'Str' | 'Strikeout' | 'Strong' | 'Subscript' | 'Superscript' | 'Underline']: InlineFilterFunction}
-
 -- I wasn't sure if this recursive definition would work, but there seem to be no complaints from lua-language-server!
 ---@alias Filter (FilterTable | Filter)[]
 
----@alias PandocFilterFunction fun(blocks: Blocks, meta: Meta): Pandoc | nil
-
----@alias MetaFilterFunction fun(meta: Meta): Meta | nil
-
----@alias BlocksFilterFunction fun(blocks: Blocks): Blocks | Block[] | nil
-
----@alias InlinesFilterFunction fun(inlines: Inlines | Inline[]): Inlines | Inline[] | nil
-
----@alias BlockFilterFunction fun(block: Block): Block | Blocks | Block[] | nil
-
----@alias InlineFilterFunction fun(inline: Inline): Inline | Inlines | Inline[] | nil
+---@class FilterTable
+---@field traverse?       ('topdown' | 'typewise')
+---@field Pandoc?         fun(blocks: Blocks, meta: Meta):      Pandoc | nil
+---@field Meta?           fun(meta: Meta):                      Meta   | nil
+---@field Blocks?         fun(blocks: Blocks):                  Blocks  | Block[]  | nil, false?
+---@field Inlines?        fun(inlines: Inlines):                Inlines | Inline[] | nil, false?
+---@field BlockQuote?     fun(block_quote: BlockQuote):         Block | Blocks | Block[] | nil, false?
+---@field BulletList?     fun(bullet_list: BulletList):         Block | Blocks | Block[] | nil, false?
+---@field CodeBlock?      fun(code_block:CodeBlock):            Block | Blocks | Block[] | nil, false?
+---@field DefinitionList? fun(definition_list: DefinitionList): Block | Blocks | Block[] | nil, false?
+---@field Div?            fun(div: Div):                        Block | Blocks | Block[] | nil, false?
+---@field Figure?         fun(figure: Figure):                  Block | Blocks | Block[] | nil, false?
+---@field Header?         fun(header: Header):                  Block | Blocks | Block[] | nil, false?
+---@field HorizontalRule? fun(horizontal_rule: HorizontalRule): Block | Blocks | Block[] | nil, false?
+---@field LineBlock?      fun(line_block: LineBlock):           Block | Blocks | Block[] | nil, false?
+---@field OrderedList?    fun(ordered_list: OrderedList):       Block | Blocks | Block[] | nil, false?
+---@field Para?           fun(para: Para):                      Block | Blocks | Block[] | nil, false?
+---@field Plain?          fun(plain: Plain):                    Block | Blocks | Block[] | nil, false?
+---@field RawBlock?       fun(raw_block: RawBlock):             Block | Blocks | Block[] | nil, false?
+---@field Table?          fun(table: Table):                    Block | Blocks | Block[] | nil, false?
+---@field Cite?           fun(cite: Cite):                      Inline | Inlines | Inline[] | nil, false?
+---@field Code?           fun(code: Code):                      Inline | Inlines | Inline[] | nil, false?
+---@field Emph?           fun(emph: Emph):                      Inline | Inlines | Inline[] | nil, false?
+---@field Image?          fun(image: Image):                    Inline | Inlines | Inline[] | nil, false?
+---@field LineBreak?      fun(line_break: LineBreak):           Inline | Inlines | Inline[] | nil, false?
+---@field Link?           fun(link: Link):                      Inline | Inlines | Inline[] | nil, false?
+---@field Math?           fun(math: Math):                      Inline | Inlines | Inline[] | nil, false?
+---@field Note?           fun(note: Note):                      Inline | Inlines | Inline[] | nil, false?
+---@field Quoted?         fun(quoted: Quoted):                  Inline | Inlines | Inline[] | nil, false?
+---@field RawInline?      fun(raw_inline: RawInline):           Inline | Inlines | Inline[] | nil, false?
+---@field SmallCaps?      fun(small_caps: SmallCaps):           Inline | Inlines | Inline[] | nil, false?
+---@field SoftBreak?      fun(soft_break: SoftBreak):           Inline | Inlines | Inline[] | nil, false?
+---@field Space?          fun(space: Space):                    Inline | Inlines | Inline[] | nil, false?
+---@field Span?           fun(span: Span):                      Inline | Inlines | Inline[] | nil, false?
+---@field Str?            fun(str: Str):                        Inline | Inlines | Inline[] | nil, false?
+---@field Strikeout?      fun(strikeout: Strikeout):            Inline | Inlines | Inline[] | nil, false?
+---@field Strong?         fun(strong: Strong):                  Inline | Inlines | Inline[] | nil, false?
+---@field Subscript?      fun(subscript: Subscript):            Inline | Inlines | Inline[] | nil, false?
+---@field Superscript?    fun(superscript: Superscript):        Inline | Inlines | Inline[] | nil, false?
+---@field Underline?      fun(underline: Underline):            Inline | Inlines | Inline[] | nil, false?
 
 
 -- Module pandoc =======================================================================================================

@@ -70,12 +70,3 @@ return {
 }
 ```
 The `Filter` type is either a `FilterTable`, or an array of `FilterTable`s, or an array of an array of `FilterTable`s, and so on. A `FilterTable` is a table of filter functions (the return value above is an example). Therefore, in the above example, the `---@type FilterTable` annotation could have been used as well (though if a nested table was returned, the `Filter` type would have to be used).
-
-Additionally, the types `PandocFilterFunction`, `MetaFilterFunction`, `BlocksFilterFunction`, `InlinesFilterFunction`, `BlockFilterFunction`, and `InlineFilterFunction` are available as well. These are primarily intended to be used internally by `pandoc-types.lua`, though may be used as well to annotate your filters if you are feeling lazy and don't want to define the function signature explicitly:
-```Lua
----@type InlineFilterFunction
-function Span(span)
-   ...
-end
-```
-Note, however, that this will assign the type `Inline` to the argument `span`, which will result in much less precise static type checking and autocomplete suggestions than if you had instead defined `span` to be of type `Span`.
