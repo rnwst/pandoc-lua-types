@@ -491,18 +491,26 @@ pandoc.Pandoc = function(blocks, meta) end
 
 -- TBD: MetaString
 
--- TBD: BlockQuote
+---Creates a BlockQuote block-level element.
+---@param content (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) block content
+---@return BlockQuote
+pandoc.BlockQuote = function(content) end
 
--- TBD: BulletList
+---Creates a BulletList block-level element.
+---@param items (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)[] list items, list of a list of block-level-like elements
+---@return BulletList
+pandoc.BulletList = function(items) end
 
--- TBD: 
 ---Creates a CodeBlock block-level element.
 ---@param text string code string
 ---@param attr? Attr element attributes
 ---@return CodeBlock
 pandoc.CodeBlock = function(text, attr) end
 
--- TBD: DefinitionList
+---Creates a DefinitionList block-level element.
+---@param content [(Inlines | Inline[] | Inline | string[] | string), (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)][] definition items (a list of tuples, where a tuple consists of a list of inline-level elements, and list of a list of block-level elements) 
+---@return DefinitionList
+pandoc.DefinitionList = function(content) end
 
 ---Creates a Div block-level element.
 ---@param content (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) block content
@@ -524,11 +532,20 @@ pandoc.Figure = function(content, caption, attr) end
 ---@return Header
 pandoc.Header = function(level, content, attr) end
 
--- TBD: HorizontalRule
+---Creates a HorizontalRule block-level element.
+---@return HorizontalRule
+pandoc.HorizontalRule = function() end
 
--- TBD: LineBlock
+---Creates a LineBlock block-level element.
+---@param content (Inlines | Inline[] | Inline | string[] | string) list of lines, i.e. list of inline elements
+---@return LineBlock
+pandoc.LineBlock = function(content) end
 
--- TBD: OrderedList
+---Creates an OrderedList block-level element.
+---@param items (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)[] list items, list of a list of block-level elements
+---@param listAttributes? ListAttributes list parameters
+---@return OrderedList
+pandoc.OrderedList = function(items, listAttributes) end
 
 ---Creates a Para block-level element.
 ---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
@@ -561,7 +578,11 @@ pandoc.Table = function(caption, colspecs, head, bodies, foot, attr) end
 ---@return Blocks
 pandoc.Blocks = function(block_like_elements) end
 
--- TBD: Cite
+---Creates a Cite inline element.
+---@param inlines (Inlines | Inline[] | Inline | string[] | string) placeholder content
+---@param citations Citation[] list of citations
+---@return Cite
+pandoc.Cite = function(inlines, citations) end
 
 ---Creates a Code inline element.
 ---@param code string code string
@@ -569,7 +590,10 @@ pandoc.Blocks = function(block_like_elements) end
 ---@return Code
 pandoc.Code= function(code, attr) end
 
--- TBD: Emph
+---Creates a Emph inline element.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return Emph
+pandoc.Emph = function(content) end
 
 ---Creates an Image inline element.
 ---@param caption (Inlines | Inline[] | Inline | string[] | string) text used to describe the image
@@ -579,7 +603,9 @@ pandoc.Code= function(code, attr) end
 ---@return Image
 pandoc.Image = function(caption, str, title, attr) end
 
--- TBD: LineBreak
+---Creates a LineBreak inline element.
+---@return LineBreak
+pandoc.LineBreak = function() end
 
 ---Creates a Link inline element (usually a hyperlink).
 ---@param content (Inlines | Inline[] | Inline | string[] | string) text for this link
@@ -600,7 +626,11 @@ pandoc.Math = function(mathtype, text) end
 ---@return Note
 pandoc.Note = function(content) end
 
--- TBD: Quoted
+---Creates a Quoted inline element.
+---@param quotetype ('SingleQuote' | 'DoubleQuote') type of quotes
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline element in quotes
+---@return Quoted
+pandoc.Quoted = function(quotetype, content) end
 
 ---Creates a RawInline inline element.
 ---@param format string format of content
@@ -608,9 +638,14 @@ pandoc.Note = function(content) end
 ---@return RawInline
 pandoc.RawInline = function(format, text) end
 
--- TBD: SmallCaps
+---Creates a SmallCaps inline element i.e. text rendered in small caps.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return SmallCaps
+pandoc.SmallCaps = function(content) end
 
--- TBD: SoftBreak
+---Creates a SoftBreak inline element.
+---@return SoftBreak
+pandoc.SoftBreak = function() end
 
 ---Creates a Space inline element.
 ---@return Space
@@ -627,15 +662,30 @@ pandoc.Span = function(content, attr) end
 ---@return Str
 pandoc.Str = function(text) end
 
--- TBD: Strikeout
+---Creates a Strikeout inline element i.e. text which is struck out.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return Strikeout
+pandoc.Strikeout = function(content) end
 
--- TBD: Strong
+---Creates a Strong inline element, whose text is usually displayed in a bold font.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return Strong
+pandoc.Strong = function(content) end
 
--- TBD: Subscript
+---Creates a Subscript inline element.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return Subscript
+pandoc.Subscript = function(content) end
 
--- TBD: Superscript
+---Creates a Superscript inline element.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return Superscript
+pandoc.Superscript = function(content) end
 
--- TBD: Underline
+---Creates an Underline inline element.
+---@param content (Inlines | Inline[] | Inline | string[] | string) inline content
+---@return Underline
+pandoc.Underline = function(content) end
 
 ---Creates a list of Inlines.
 ---@param inline_like_elements (Inlines | Inline[] | Inline | string[] | string)
