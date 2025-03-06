@@ -8,7 +8,7 @@
 
 -- Pandoc ------------------------------------------------------------------------------------------
 
----@class Pandoc
+---@class (exact) Pandoc
 ---@field blocks (Blocks | Block[]) document content
 ---@field meta Meta document meta information
 ---@field walk fun(filter: Filter): Pandoc
@@ -61,17 +61,17 @@ end
 ---@return Blocks
 function Blocks:walk(filter) end
 
----@class BlockQuote
+---@class (exact) BlockQuote
 ---@field content (Blocks | Block[]) block content
 ---@field tag 'BlockQuote'
 ---@field t 'BlockQuote'
 
----@class BulletList
+---@class (exact) BulletList
 ---@field content (Blocks | Block[])[] list items, list of a list of block-level elements
 ---@field tag 'BulletList'
 ---@field t 'BulletList'
 
----@class CodeBlock
+---@class (exact) CodeBlock
 ---@field text string code string
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
@@ -80,12 +80,12 @@ function Blocks:walk(filter) end
 ---@field tag 'CodeBlock'
 ---@field t 'CodeBlock'
 
----@class DefinitionList
+---@class (exact) DefinitionList
 ---@field content [(Inlines | Inline[]), (Blocks | Block[])][] a list of tuples, where a tuple consists of a list of inline-level elements, and list of a list of block-level elements 
 ---@field tag 'DefinitionList'
 ---@field t 'DefinitionList'
 
----@class Div
+---@class (exact) Div
 ---@field content (Blocks | Block[]) block content
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
@@ -94,7 +94,7 @@ function Blocks:walk(filter) end
 ---@field tag 'Div'
 ---@field t 'Div'
 
----@class Figure
+---@class (exact) Figure
 ---@field content (Blocks | Block[])
 ---@field caption Caption
 ---@field attr Attr
@@ -104,7 +104,7 @@ function Blocks:walk(filter) end
 ---@field tag 'Figure'
 ---@field t 'Figure'
 
----@class Header
+---@class (exact) Header
 ---@field level integer header level
 ---@field content (Inlines | Inline[]) inline content
 ---@field attr Attr element attributes
@@ -114,39 +114,39 @@ function Blocks:walk(filter) end
 ---@field tag 'Header'
 ---@field t 'Header'
 
----@class HorizontalRule
+---@class (exact) HorizontalRule
 ---@field tag 'HorizontalRule'
 ---@field t 'HorizontalRule'
 
----@class LineBlock
+---@class (exact) LineBlock
 ---@field content (Inlines | Inline[]) list of lines, i.e. list of inline elements
 ---@field tag 'LineBlock'
 ---@field t 'LineBlock'
 
----@class OrderedList
+---@class (exact) OrderedList
 ---@field content (Blocks | Block[])[] list items, list of a list of block-level elements
 ---@field listAttributes ListAttributes list parameters
 ---@field start integer alias for `listAttributes.start`
 ---@field style string alias for `listAttributes.style`
 ---@field delimiter string alias for `listAttributes.delimiter`
 
----@class Para
+---@class (exact) Para
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Para'
 ---@field t 'Para'
 
----@class Plain
+---@class (exact) Plain
 ---@field content (Inlines | Inline[])
 ---@field tag 'Plain'
 ---@field t 'Plain'
 
----@class RawBlock
+---@class (exact) RawBlock
 ---@field format string format of content
 ---@field text string raw content
 ---@field tag 'RawBlock'
 ---@field t 'RawBlock'
 
----@class Table
+---@class (exact) Table
 ---@field attr Attr table attributes
 ---@field caption Caption table caption
 ---@field colspecs ColSpec column specifications, i.e. alignments and widths
@@ -207,13 +207,13 @@ end
 ---@return Inlines
 function Inlines:walk(filter) end
 
----@class Cite
+---@class (exact) Cite
 ---@field content (Inlines | Inline[]) citation content
 ---@field citations Citation[] list of citations
 ---@field tag 'Cite'
 ---@field t 'Cite'
 
----@class Code
+---@class (exact) Code
 ---@field text string code string
 ---@field attr Attr attributes
 ---@field identifier string alias for `attr.identifier`
@@ -222,12 +222,12 @@ function Inlines:walk(filter) end
 ---@field tag 'Code'
 ---@field t 'Code'
 
----@class Emph
+---@class (exact) Emph
 ---@field content (Inlines | Inline[])
 ---@field tag 'Emph'
 ---@field t 'Emph'
 
----@class Image
+---@class (exact) Image
 ---@field caption (Inlines | Inline[]) text used to describe the image
 ---@field src string path to the image file
 ---@field title string brief image description
@@ -238,11 +238,11 @@ function Inlines:walk(filter) end
 ---@field tag 'Image'
 ---@field t 'Image'
 
----@class LineBreak
+---@class (exact) LineBreak
 ---@field tag 'LineBreak'
 ---@field t 'LineBreak'
 
----@class Link
+---@class (exact) Link
 ---@field attr Attr attributes
 ---@field content (Inlines | Inline[]) text for this link
 ---@field target string the link target
@@ -253,43 +253,43 @@ function Inlines:walk(filter) end
 ---@field tag 'Link'
 ---@field t 'Link'
 
----@class Math
+---@class (exact) Math
 ---@field mathtype ('InlineMath' | 'DisplayMath')
 ---@field text string
 ---@field tag 'Math'
 ---@field t 'Math'
 
----@class Note Footnote or endnote. A Note is the only inline element which can contain Block content. Values of this type can be created with the `pandoc.Note` constructor.
+---@class (exact) Note Footnote or endnote. A Note is the only inline element which can contain Block content. Values of this type can be created with the `pandoc.Note` constructor.
 ---@field content (Blocks | Block[]) note content
 ---@field tag 'Note'
 ---@field t 'Note'
 
----@class Quoted
+---@class (exact) Quoted
 ---@field quotetype ('SingleQuote' | 'DoubleQuote')
 ---@field content (Inlines | Inline[])
 ---@field tag 'Quoted'
 ---@field t 'Quoted'
 
----@class RawInline
+---@class (exact) RawInline
 ---@field format string the format of the content
 ---@field text string raw content
 ---@field tag 'RawInline'
 ---@field t 'RawInline'
 
----@class SmallCaps
+---@class (exact) SmallCaps
 ---@field content (Inlines | Inline[]) small caps content
 ---@field tag 'SmallCaps'
 ---@field t 'SmallCaps'
 
----@class SoftBreak
+---@class (exact) SoftBreak
 ---@filed tag 'SoftBreak'
 ---@field t 'SoftBreak'
 
----@class Space
+---@class (exact) Space
 ---@field tag 'Space'
 ---@field t 'Space'
 
----@class Span
+---@class (exact) Span
 ---@field attr Attr attributes
 ---@field content (Inlines | Inline[]) wrapped content
 ---@field identifier string alias for `attr.identifier`
@@ -298,31 +298,31 @@ function Inlines:walk(filter) end
 ---@field tag 'Span'
 ---@field t 'Span'
 
----@class Str
+---@class (exact) Str
 ---@field tag 'Str'
 ---@field text string Content
 
----@class Strikeout
+---@class (exact) Strikeout
 ---@field content (Inlines | Inline[]) struck out content
 ---@field tag 'Strikeout'
 ---@field t 'Strikeout'
 
----@class Strong
+---@class (exact) Strong
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Strong'
 ---@field t 'Strong'
 
----@class Subscript
+---@class (exact) Subscript
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Subscript'
 ---@field t 'Subscript'
 
----@class Superscript
+---@class (exact) Superscript
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Superscript'
 ---@field t 'Superscript'
 
----@class Underline
+---@class (exact) Underline
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Underline'
 ---@field t 'Underline'
@@ -332,18 +332,18 @@ function Inlines:walk(filter) end
 
 ---@alias Alignment 'AlignDefault' | 'AlignLeft' | 'AlignRight' | 'AlignCenter'
 
----@class Attr
+---@class (exact) Attr
 ---@field identifier string element identifier
 ---@field classes string[] element classes
 ---@field attributes Attributes element attributes
 
 ---@alias Attributes table<string, string> collection of key/value pairs
 
----@class Caption The caption of a table, with an optional short caption.
+---@class (exact) Caption The caption of a table, with an optional short caption.
 ---@field long (Blocks | Block[])
 ---@field short (Inlines | Inline[])
 
----@class Cell A table cell.
+---@class (exact) Cell A table cell.
 ---@field alignment Alignment individual cell alignment
 ---@field contents (Blocks | Block[]) cell contents
 ---@field col_span integer number of columns spanned by the cell; the width of the cell in columns
@@ -352,7 +352,7 @@ function Inlines:walk(filter) end
 ---@field classes string[] alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 
----@class Citation
+---@class (exact) Citation
 ---@field id string citation identifier, e.g. a bibtex key
 ---@field mode ('AuthorInText' | 'SuppressAuthor' | 'NormalCitation') citation mode
 ---@field prefix (Inlines | Inline[]) citation prefix
@@ -362,29 +362,29 @@ function Inlines:walk(filter) end
 
 ---@alias ColSpec [Alignment, number]
 
----@class ListAttributes
+---@class (exact) ListAttributes
 ---@field start integer number of the first list item
 ---@field style ('DefaultStyle' | 'Example' | 'Decimal' | 'LowerRoman' | 'UpperRoman' | 'LowerAlpha' | 'UpperAlpha') style used for list numbers
 ---@field delimiter ('DefaultDelim' | 'Period' | 'OneParen' | 'TwoParens') delimiter of list numbers
 
----@class Row A table row.
+---@class (exact) Row A table row.
 ---@field attr Attr element attributes
 ---@field cells Cell[] list of table cells
 
----@class TableBody A body of a table, with an intermediate head and the specified number of row header columns.
+---@class (exact) TableBody A body of a table, with an intermediate head and the specified number of row header columns.
 ---@field attr Attr table body attributes
 ---@field body Row[] table body rows
 ---@field head Row[] intermediate head
 ---@field row_head_columns number Number of columns taken up by the row head of each row of a TableBody. The row body takes up the remaining columns.
 
----@class TableFoot The foot of a table.
+---@class (exact) TableFoot The foot of a table.
 ---@field attr Attr table foot attributes
 ---@field rows Row[] list of rows
 ---@field identifier string alias for `attr.identifier`
 ---@field classes string[] alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 
----@class TableHead The head of a table.
+---@class (exact) TableHead The head of a table.
 ---@field attr Attr table head attributes
 ---@field rows Row[] list of rows
 ---@field identifier string alias for `attr.identifier`
@@ -394,7 +394,7 @@ function Inlines:walk(filter) end
 
 -- Other types -------------------------------------------------------------------------------------
 
----@class ReaderOptions
+---@class (exact) ReaderOptions
 ---@field abbreviations string[] set of known abbreviations
 ---@field columns integer number of columns in terminal
 ---@field default_image_extension string default extension for images
@@ -404,11 +404,11 @@ function Inlines:walk(filter) end
 ---@field tab_stop integer width (i.e. equivalent number of spaces) of tab stops
 ---@field track_changes ('accept-changes' | 'reject-changes' | 'all-changes') track changes setting for docx
 
----@class WriterOptions
+---@class (exact) WriterOptions
 ---@field number_sections boolean
 ---@field number_offset integer[]
 ---@field html_math_method HTMLMathMethod
----@class WriterOptions
+---@class (exact) WriterOptions
 
 ---@alias HTMLMathMethod
 ---| 'plain'
@@ -425,7 +425,7 @@ function Inlines:walk(filter) end
 -- I wasn't sure if this recursive definition would work, but there seem to be no complaints from lua-language-server!
 ---@alias Filter (FilterTable | Filter)[]
 
----@class FilterTable
+---@class (exact) FilterTable
 ---@field traverse?       ('topdown' | 'typewise')
 ---@field Pandoc?         fun(blocks: Blocks, meta: Meta):      Pandoc | nil
 ---@field Meta?           fun(meta: Meta):                      Meta   | nil
