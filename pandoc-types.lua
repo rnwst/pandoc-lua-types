@@ -17,7 +17,23 @@
 -- Meta --------------------------------------------------------------------------------------------
 
 -- TBD - don't forget about `clone` method!
----@alias Meta table
+---@alias Meta {[string]: any}
+
+
+-- List --------------------------------------------------------------------------------------------
+
+---@class List
+List = {}
+List.__index = List
+List.__name = 'List'
+
+---List constructor
+---@param list List
+---@return List
+function Blocks:new(list)
+   setmetatable(list, self)
+   return list
+end
 
 
 -- Blocks ------------------------------------------------------------------------------------------
@@ -41,8 +57,9 @@
 ---@class Blocks
 Blocks = {}
 Blocks.__index = Blocks
+Blocks.__name = 'Blocks'
 
----Sequence of block-level elements
+---Blocks constructor
 ---@param blocks Block[]
 ---@return Blocks
 function Blocks:new(blocks)
@@ -187,8 +204,9 @@ function Blocks:walk(filter) end
 ---@class Inlines
 Inlines = {}
 Inlines.__index = Inlines
+Inlines.__name = 'Inlines'
 
----Sequence of block-level elements
+---Inlines constructor
 ---@param inlines Inline[]
 ---@return Inlines
 function Inlines:new(inlines)
@@ -471,25 +489,38 @@ function Inlines:walk(filter) end
 
 pandoc = {}
 
----Returns new Pandoc document.
+---Creates a new Pandoc document.
 ---@param blocks (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)
 ---@param meta? Meta
 ---@return Pandoc
 pandoc.Pandoc = function(blocks, meta) end
 
--- TBD: Meta
+---Creates a Meta table containing document metadata.
+---@param meta {[string]: any} document metadata
+---@return Meta
+pandoc.Meta = function(meta) end
 
----TBD: MetaBlocks
+pandoc.MetaBlocks = pandoc.Blocks
 
--- TBD: MetaBool
+---Converts the argument into a boolean. This function is pretty pointless.
+---@param arg any
+---@return boolean
+pandoc.MetaBool = function(arg) end
 
--- TBD: MetaInlines
+pandoc.MetaInlines = pandoc.Inlines
 
--- TBD: MetaList
+pandoc.MetaList = pandoc.List
 
--- TBD: MetaMap
+---Creates a value to be used as a MetaMap in document metadata.
+---Creates a copy of the input table, keeping only pairs with string keys and discards all other keys.
+---@param tbl table
+---@return {[string]: any}
+pandoc.MetaMap = function(tbl) end
 
--- TBD: MetaString
+---Converts the argument into a string, but acts as the identity function if the argument is a boolean. This function exists only for completeness and is pretty pointless.
+---@param arg (string | integer | boolean)
+---@return string | boolean
+pandoc.MetaString = function(arg) end
 
 ---Creates a BlockQuote block-level element.
 ---@param content (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) block content
@@ -614,6 +645,13 @@ pandoc.LineBreak = function() end
 ---@param attr? Attr link attributes
 ---@return Link
 pandoc.Link = function(content, target, title, attr) end
+
+---Creates a table which will be treated by pandoc as a List rather than a Map.
+---This is useful when passing an empty table as a MetaValue to ensure it is treated as a List.
+---Sets the table's metatable, which has the field `__name` with value 'List'.
+---@param tbl table
+---@return List
+pandoc.List = function(tbl) end
 
 ---Creates a Math inline-level element. Math elements can be either inline or displayed.
 ---@param mathtype ('InlineMath' | 'DisplayMath') rendering specifier
