@@ -412,21 +412,35 @@ function Inlines:walk(filter) end
 
 -- Other types -------------------------------------------------------------------------------------
 
+-- Fields of ReaderOptions and WriterOptions are all optional since the
+-- `reader_options` and `writer_options` arguments of the `pandoc.read`
+-- and `pandoc.write` functions can take tables with a subset of the fields
+-- of ReaderOptions and WriterOptions. This way, the `reader_options` and
+-- `writer_options` arguments can be declared to be of type ReaderOptions
+-- and WriterOptions respectively, without needing to define more types
+-- with optional fields (which one might have called ReaderOptionsSubset or
+-- similar...).
+
 ---@class (exact) ReaderOptions
----@field abbreviations string[] set of known abbreviations
----@field columns integer number of columns in terminal
----@field default_image_extension string default extension for images
----@field indented_code_classes string[] default classes for indented code blocks
----@field standalone boolean whether the input was a standalone document with header
----@field strip_comments boolean whether HTML comments were stripped instead of parsed as raw HTML
----@field tab_stop integer width (i.e. equivalent number of spaces) of tab stops
----@field track_changes ('accept-changes' | 'reject-changes' | 'all-changes') track changes setting for docx
+---@field abbreviations?           string[]           set of known abbreviations
+---@field columns?                 integer            number of columns in terminal
+---@field default_image_extension? string             default extension for images
+---@field indented_code_classes?   string[]           default classes for indented code blocks
+---@field standalone?              boolean            whether the input was a standalone document with header
+---@field strip_comments?          boolean            whether HTML comments were stripped instead of parsed as raw HTML
+---@field tab_stop?                integer            width (i.e. equivalent number of spaces) of tab stops
+---@field track_changes?           TrackChangesOption track changes setting for docx
+
+---@alias TrackChangesOption
+---| 'accept-changes'
+---| 'reject-changes'
+---| 'all-changes'
+
 
 ---@class (exact) WriterOptions
----@field number_sections boolean
----@field number_offset integer[]
----@field html_math_method HTMLMathMethod
----@class (exact) WriterOptions
+---@field number_sections?  boolean
+---@field number_offset?    integer[]
+---@field html_math_method? HTMLMathMethod
 
 ---@alias HTMLMathMethod
 ---| 'plain'
@@ -768,14 +782,14 @@ pandoc.Attr = function(identifier, classes, attributes) end
 ---Parses the given string into a Pandoc document.
 ---@param markup string The markup to be parsed.
 ---@param format? string | {format: string, extensions: (string[] | table<string, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be parsed. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
----@param reader_options? ReaderOptions | table<string, any> Options passed to the reader; may be a ReaderOptions object or a table with a subset of the keys and values of a ReaderOptions object; defaults to the default values documented in the manual.
+---@param reader_options? ReaderOptions Options passed to the reader; may be a ReaderOptions object or a table with a subset of the keys and values of a ReaderOptions object; defaults to the default values documented in the manual.
 ---@return Pandoc
 pandoc.read = function(markup, format, reader_options) end
 
 ---Converts a document to the given target format.
 ---@param doc Pandoc Document to convert.
 ---@param format? string | {format: string, extensions: (string[] | table<string, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be written. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
----@param writer_options? WriterOptions | table<string, any> Options passed to the writer; may be a WriterOptions object or a table with a subset of the keys and values of a WriterOptions object; defaults to the default values documented in the manual.
+---@param writer_options? WriterOptions Options passed to the writer; may be a WriterOptions object or a table with a subset of the keys and values of a WriterOptions object; defaults to the default values documented in the manual.
 ---@return string
 pandoc.write = function(doc, format, writer_options) end
 
