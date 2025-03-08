@@ -16,24 +16,8 @@
 
 -- Meta --------------------------------------------------------------------------------------------
 
--- TBD - don't forget about `clone` method!
+-- TBD - don't forget about `clone` and `walk` methods!
 ---@alias Meta {[string]: any}
-
-
--- List --------------------------------------------------------------------------------------------
-
----@class List
-List = {}
-List.__index = List
-List.__name = 'List'
-
----List constructor
----@param list List
----@return List
-function Blocks:new(list)
-   setmetatable(list, self)
-   return list
-end
 
 
 -- Blocks ------------------------------------------------------------------------------------------
@@ -372,18 +356,24 @@ function Inlines:walk(filter) end
 
 ---@class (exact) Citation
 ---@field id string citation identifier, e.g. a bibtex key
----@field mode ('AuthorInText' | 'SuppressAuthor' | 'NormalCitation') citation mode
+---@field mode CitationMode citation mode
 ---@field prefix (Inlines | Inline[]) citation prefix
 ---@field suffix (Inlines | Inline[]) citation suffix
 ---@field note_num integer note number
 ---@field hash integer hash
 
+---@alias CitationMode ('AuthorInText' | 'SuppressAuthor' | 'NormalCitation')
+
 ---@alias ColSpec [Alignment, number]
 
 ---@class (exact) ListAttributes
 ---@field start integer number of the first list item
----@field style ('DefaultStyle' | 'Example' | 'Decimal' | 'LowerRoman' | 'UpperRoman' | 'LowerAlpha' | 'UpperAlpha') style used for list numbers
----@field delimiter ('DefaultDelim' | 'Period' | 'OneParen' | 'TwoParens') delimiter of list numbers
+---@field style ListNumberStyle style used for list numbers
+---@field delimiter ListNumberDelim delimiter of list numbers
+
+---@alias ListNumberStyle ('DefaultStyle' | 'Example' | 'Decimal' | 'LowerRoman' | 'UpperRoman' | 'LowerAlpha' | 'UpperAlpha')
+
+---@alias ListNumberDelim ('DefaultDelim' | 'Period' | 'OneParen' | 'TwoParens')
 
 ---@class (exact) Row A table row.
 ---@field attr Attr element attributes
@@ -436,7 +426,6 @@ function Inlines:walk(filter) end
 ---| 'reject-changes'
 ---| 'all-changes'
 
-
 ---@class (exact) WriterOptions
 ---@field number_sections?  boolean
 ---@field number_offset?    integer[]
@@ -450,6 +439,46 @@ function Inlines:walk(filter) end
 ---| 'katex'
 ---| 'gladtex'
 ---| { method: ('plain' | 'mathjax' | 'mathml' | 'webtex' | 'katex' | 'gladtex'), url: string }
+
+-- TBD: CommonState
+
+-- TBD: Doc
+
+---@class List
+List = {}
+List.__index = List
+List.__name = 'List'
+
+---List constructor
+---@param list List
+---@return List
+function Blocks:new(list)
+   setmetatable(list, self)
+   return list
+end
+
+-- TBD: missing List methods
+
+-- TBD: LogMessage
+
+-- TBD: SimpleTable
+
+-- TBD: Template
+
+-- TBD: Version
+
+-- TBD: Chunk
+
+-- TBD: ChunkedDoc
+
+
+-- Globals =============================================================================================================
+
+---@type WriterOptions
+PANDOC_WRITER_OPTIONS = {}
+
+---@type string
+FORMAT = ''
 
 
 -- Filters =============================================================================================================
@@ -660,13 +689,6 @@ pandoc.LineBreak = function() end
 ---@return Link
 pandoc.Link = function(content, target, title, attr) end
 
----Creates a table which will be treated by pandoc as a List rather than a Map.
----This is useful when passing an empty table as a MetaValue to ensure it is treated as a List.
----Sets the table's metatable, which has the field `__name` with value 'List'.
----@param tbl table
----@return List
-pandoc.List = function(tbl) end
-
 ---Creates a Math inline-level element. Math elements can be either inline or displayed.
 ---@param mathtype ('InlineMath' | 'DisplayMath') rendering specifier
 ---@param text string math content
@@ -751,21 +773,69 @@ pandoc.Inlines = function(inline_like_elements) end
 ---@return Attr
 pandoc.Attr = function(identifier, classes, attributes) end
 
--- TBD: Cell
+---Creates a new table cell.
+---@param blocks (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) cell contents
+---@param align? Alignment text alignment, defaults to 'AlignDefault'
+---@param rowspan? integer number of rows occupied by the cell, defaults to 1
+---@param colspan? integer number of columns occupied by the cell, defaults to 1
+---@param attr? Attr cell attributes
+---@return Cell
+pandoc.Cell = function(blocks, align, rowspan, colspan, attr) end
 
--- TBD: AttributeList
+---Creates an Attributes object, i.e. a string-indexed table of strings when
+---passed a string-indexed table of strings or integers. This function seems to
+---be pretty pointless. I would also have expected it to be named 'Attributes',
+---not 'AttributesList'.
+---@param attributes {[string]: string | integer}
+---@return Attributes
+pandoc.AttributeList = function(attributes) end
 
--- TBD: Citation
+---Creates a single citation.
+---@param id string citation Id
+---@param mode? CitationMode citation rendering mode
+---@param prefix? (Inlines | Inline[] | Inline | string[] | string)
+---@param suffix? (Inlines | Inline[] | Inline | string[] | string)
+---@param note_num? integer note number
+---@param hash? integer hash number
+---@return Citation
+pandoc.Citation = function(id, mode, prefix, suffix, note_num, hash) end
 
--- TBD: ListAttributes
+---Creates a new ListAttributes object.
+---@param start integer number of the first list item
+---@param style ListNumberStyle style used for list numbering
+---@param delimiter ListNumberDelim delimiter of list numbers
+---@return ListAttributes
+pandoc.ListAttributes = function(start, style, delimiter) end
 
--- TBD: Row
+---Creates a table row.
+---@param cells? Cell[] list of table cells in this row
+---@param attr? Attr row attributes
+---@return Row
+pandoc.Row = function(cells, attr) end
 
--- TBD: TableFoot
+---Creates a table foot.
+---@param rows? Row[] list of table rows
+---@param attr? table foot attributes
+---@return TableFoot
+pandoc.TableFoot = function(rows, attr) end
 
--- TBD: TableHead
+---Creates a table head.
+---@param rows Row[] list of table rows
+---@param attr Attr table head attributes
+---@return TableHead
+pandoc.TableHead = function(rows, attr) end
+
+-- TBD: improve description of function --- mention available List methods.
+---Creates a table which will be treated by pandoc as a List rather than a Map.
+---This is useful when passing an empty table as a MetaValue to ensure it is treated as a List.
+---Sets the table's metatable, which has the field `__name` with value 'List'.
+---@param tbl table
+---@return List
+pandoc.List = function(tbl) end
 
 -- TBD: SimpleTable
+---Creates a SimpleTable object.
+pandoc.SimpleTable = function(caption, align, widths, header, rows) end
 
 
 -- Other constructors ------------------------------------------------------------------------------
@@ -778,6 +848,10 @@ pandoc.Attr = function(identifier, classes, attributes) end
 -- Helper functions --------------------------------------------------------------------------------
 
 -- TBD: pipe
+
+-- TBD: walk_block
+
+-- TBD: walk_inline
 
 ---Parses the given string into a Pandoc document.
 ---@param markup string The markup to be parsed.
@@ -793,11 +867,40 @@ pandoc.read = function(markup, format, reader_options) end
 ---@return string
 pandoc.write = function(doc, format, writer_options) end
 
+-- TBD: write_classic
 
--- Globals =============================================================================================================
+-- Other modules =======================================================================================================
 
----@type WriterOptions
-PANDOC_WRITER_OPTIONS = {}
+-- TBD: pandoc.cli
 
----@type string
-FORMAT = ''
+-- TBD: pandoc.utils
+
+-- TBD: pandoc.mediabag
+
+-- TBD: pandoc.format
+
+-- TBD: pandoc.image
+
+-- TBD: pandoc.json
+
+-- TBD: pandoc.log
+
+-- TBD: pandoc.path
+
+-- TBD: pandoc.structure
+
+-- TBD: pandoc.system
+
+-- TBD: pandoc.layout
+
+-- TBD: pandoc.scaffolding
+
+-- TBD: pandoc.text
+
+-- TBD: pandoc.text
+
+-- TBD: pandoc.template
+
+-- TBD: pandoc.types
+
+-- TBD: pandoc.zip
