@@ -426,10 +426,72 @@ function Inlines:walk(filter) end
 ---| 'reject-changes'
 ---| 'all-changes'
 
+---@alias Extension
+---| 'smart'
+---| 'auto_identifiers'
+---| 'ascii_identifiers'
+---| 'gfm_auto_identifiers'
+---| 'tex_math_dollars'
+---| 'tex_math_gfm'
+---| 'tex_math_single_backslash'
+---| 'tex_math_double_backslash'
+---| 'raw_html'
+---| 'raw_tex'
+---| 'native_divs'
+---| 'native_spans'
+---| 'literate_haskell'
+---| 'empty_paragraphs'
+---| 'native_numbering'
+---| 'xrefs_name'
+---| 'xrefs_number'
+---| 'styles'
+---| 'amuse'
+---| 'raw_markdown'
+---| 'citations'
+---| 'fancy_lists'
+---| 'element_citations'
+---| 'ntb'
+---| 'tagging'
+
 ---@class (exact) WriterOptions
----@field number_sections?  boolean
----@field number_offset?    integer[]
----@field html_math_method? HTMLMathMethod
+---@field chunk_template?     string                 template used to generate chunked HTML filenames
+---@field cite_method?        CiteMethod             how to print cites
+---@field columns?            integer                number of characters in a line (for text wrapping)
+---@field dpi?                integer                DPI for pixel to/from inch/cm conversions
+---@field email_obfuscation?  EmailObfuscationMethod how to obfuscate emails
+---@field epub_chapter_level? integer                header level for chapters, i.e. how the document is split into separate files
+---@field epub_fonts?         string[]               paths to fonts to embed
+---@field epub_metadata?      (string | nil)         metadata to include in EPUB
+---@field epub_subdirectory?  string                 subdirectory for epub in OCF
+---@field extensions?         Extension[]            writer extensions to use
+---@field highlight_style?    (table | nil)          style to use for syntax highlighting
+---@field html_math_method?   HTMLMathMethod         how to print math in HTML
+---@field html_q_tags?        boolean                whether to use `<q>` tags for quotes in HTML
+---@field identifier_prefix?  string                 prefix for section and note ids in HTML and for footnote marks in markdown
+---@field incremental?        boolean                whether lists in slide shows should be displayed incrementally
+---@field listings?           boolean                whether to use listings package for code
+---@field number_offset?      integer[]              starting numbers for section, subsection, ...
+---@field number_sections?    boolean                whether to number sections in LaTeX
+---@field prefer_ascii?       boolean                whether to prefer ASCII representations of characters when possible
+---@field reference_doc?      (string | nil)         path to reference document if specified
+---@field reference_links?    boolean                whether to use reference links in writing markdown, rst
+---@field reference_location? ReferenceLocation      location of footnotes and references for writing markdown
+---@field section_divs?       boolean                whether to put sections in div tags in HTML
+---@field setext_headers?     boolean                whether to use setext headers for levels 1-2 in markdown
+---@field slide_level?        (integer | nil)        force header level of slides
+---@field tab_stop?           integer                number of spaces per tab for conversion between spaces and tabs
+---@field table_of_contents?  boolean                whether to include table of contents
+---@field template?           (Template | nil)       template to use
+---@field toc_depth?          integer                number of levels to include in TOC
+---@field top_level_division? TopLevelDivision       type of top-level divisions
+---@field variables?          table<string, any>     variables to set in template
+---@field wrap_text?          TextWrapMethod         option for wrapping text
+
+---@alias CiteMethod ('citeproc' | 'natbib' | 'biblatex')
+---@alias EmailObfuscationMethod ('none' | 'references' | 'javascript')
+---@alias ReferenceLocation ('end-of-block' | 'block' | 'end-of-section' | 'section' | 'end-of-document' | 'document')
+---@alias TopLevelDivision ('top-level-part' | 'part' | 'top-level-chapter' | 'chapter' | 'top-level-section' | 'section' | 'top-level-default' | 'default')
+---@alias TextWrapMethod ('wrap-auto' | 'auto' | 'wrap-none' | 'none' | 'wrap-preserve' | 'preserve')
 
 ---@alias HTMLMathMethod
 ---| 'plain'
@@ -463,7 +525,7 @@ end
 
 -- TBD: SimpleTable
 
--- TBD: Template
+---@class Template opaque type holding a compiled template
 
 -- TBD: Version
 
@@ -855,14 +917,14 @@ pandoc.SimpleTable = function(caption, align, widths, header, rows) end
 
 ---Parses the given string into a Pandoc document.
 ---@param markup string The markup to be parsed.
----@param format? string | {format: string, extensions: (string[] | table<string, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be parsed. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
+---@param format? string | {format: string, extensions: (Extension[] | table<Extension, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be parsed. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
 ---@param reader_options? ReaderOptions Options passed to the reader; may be a ReaderOptions object or a table with a subset of the keys and values of a ReaderOptions object; defaults to the default values documented in the manual.
 ---@return Pandoc
 pandoc.read = function(markup, format, reader_options) end
 
 ---Converts a document to the given target format.
 ---@param doc Pandoc Document to convert.
----@param format? string | {format: string, extensions: (string[] | table<string, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be written. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
+---@param format? string | {format: string, extensions: (Extension[] | table<Extension, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be written. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
 ---@param writer_options? WriterOptions Options passed to the writer; may be a WriterOptions object or a table with a subset of the keys and values of a WriterOptions object; defaults to the default values documented in the manual.
 ---@return string
 pandoc.write = function(doc, format, writer_options) end
