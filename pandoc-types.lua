@@ -502,7 +502,18 @@ function Inlines:walk(filter) end
 ---| 'gladtex'
 ---| { method: ('plain' | 'mathjax' | 'mathml' | 'webtex' | 'katex' | 'gladtex'), url: string }
 
--- TBD: CommonState
+---@class (exact) CommonState
+---@field input_files     string[]           list of input files from command line
+---@field output_file     (string | nil)     output file from command line
+---@field log             LogMessage[]       list of log messages in reverse order
+---@field request_headers {[string]: string} headers to add for HTTP requests; table with header names as keys and header contents as values
+---@field resource_path   string[]           path to search for resources like included images
+---@field source_url      (string | nil)     absolute URL or directory of first source file
+---@field user_data_dir   (string | nil)     directory to search for data files
+---@field trace           boolean            whether tracing messages are issued
+---@field verbosity       Verbosity          verbosity level
+
+---@alias Verbosity ('INFO' | 'WARNING' | 'ERROR')
 
 -- TBD: Doc
 
@@ -514,14 +525,14 @@ List.__name = 'List'
 ---List constructor
 ---@param list List
 ---@return List
-function Blocks:new(list)
+function List:new(list)
    setmetatable(list, self)
    return list
 end
 
 -- TBD: missing List methods
 
--- TBD: LogMessage
+---@class LogMessage A pandoc log message. It has no fields, but can be converted to a string via `tostring`.
 
 -- TBD: SimpleTable
 
