@@ -34,7 +34,7 @@ pandoc.List.__call = pandoc.List.new
 ---treated as a List. It is also useful for making List methods such as `find`,
 ---`filter`, `includes`, `insert`, `map`, `remove`, and `sort` available on an
 ---existing array, as well as the metamethods `__concat` and `__eq`, which allow
----for concatenation and to test for equality of lists.
+---for concatenation and to test for equality of Lists.
 ---@param tbl table
 ---@return List
 function pandoc.List:new(tbl)
@@ -43,7 +43,7 @@ function pandoc.List:new(tbl)
 end
 
 ---Returns the element at the given index, or `default`
----if the list contains no item at the given position.
+---if the List contains no item at the given position.
 ---@generic T
 ---@param self List<T>
 ---@param index integer
@@ -51,13 +51,13 @@ end
 ---@return T | nil
 function pandoc.List:at(index, default) end
 
----Returns a shallow copy of the list. (To get a deep copy, use `walk` with an empty filter.)
+---Returns a shallow copy of the List. (To get a deep copy, use `walk` with an empty filter.)
 ---@generic T
 ---@self List<T>
 ---@return List<T>
 function pandoc.List:clone() end
 
----Adds the given list to the end of this list. The same can be achieved by using
+---Adds the given List to the end of this List. The same can be achieved by using
 ---the concatenation operator (`..`).
 ---@generic T
 ---@param list List<T>
@@ -79,7 +79,7 @@ function pandoc.List:find(needle, init) end
 ---@return T, integer | nil
 function pandoc.List:find_if(pred, init) end
 
----Returns a new list containing all items satisfying a given condition.
+---Returns a new List containing all items satisfying a given condition.
 ---@generic T
 ---@param self List<T>
 ---@param pred fun(T): boolean  the predicate function
@@ -94,14 +94,14 @@ function pandoc.List:filter(pred) end
 ---@return boolean
 function pandoc.List:includes(needle, init) end
 
----Inserts element `value` at position `pos` in list, shifting elements to the next-greater index if necessary.
+---Inserts element `value` at position `pos` in List, shifting elements to the next-greater index if necessary.
 ---This function is identical to `table.insert`.
 ---@generic T
----@param pos? integer  index of new value; defaults to length of the list + 1
----@param value T       value to insert into the list
+---@param pos? integer  index of new value; defaults to length of the List + 1
+---@param value T       value to insert into the List
 function pandoc.List:insert(pos, value) end
 
----Create an iterator over the list. The resulting function returns the next value each time it is called.
+---Create an iterator over the List. The resulting function returns the next value each time it is called.
 ---
 ---Usage:
 ---```
@@ -111,14 +111,14 @@ function pandoc.List:insert(pos, value) end
 ---```
 ---@generic T
 ---@param self List<T>
----@param step? integer  step width with which to step through the list; negative step sizes cause the iterator to start from the end of the list; defaults to 1
+---@param step? integer  step width with which to step through the List; negative step sizes cause the iterator to start from the end of the List; defaults to 1
 ---@return fun(): T
 function pandoc.List:iter(step) end
 
----Returns a copy of the current list by applying the given function to all elements.
+---Returns a copy of the current List by applying the given function to all elements.
 ---@generic T
 ---@param self List<T>
----@param fn fun(T): T  function which is applied to all list items
+---@param fn fun(T): T  function which is applied to all List items
 ---@return List<T>
 function pandoc.List:map(fn) end
 
@@ -126,18 +126,18 @@ function pandoc.List:map(fn) end
 ---This function is identical to `table.remove`.
 ---@generic T
 ---@param self List<T>
----@param pos integer  position of the list value to be removed; defaults to the index of the last element
+---@param pos integer  position of the List value to be removed; defaults to the index of the last element
 ---@return List<T>
 function pandoc.List:remove(pos) end
 
----Sorts list elements in a given order, in-place. If `comp` is given, then it
----must be a function that receives two list elements and returns `true` when
+---Sorts List elements in a given order, in-place. If `comp` is given, then it
+---must be a function that receives two List elements and returns `true` when
 ---the first element must come before the second in the final order (so that,
 ---after the sort, `i < j` implies `not comp(list[j],list[i]))`. If `comp` is
 ---not given, then the standard Lua operator `<` is used instead.
 ---
 ---Note that the comp function must define a strict partial order over the
----elements in the list; that is, it must be asymmetric and transitive.
+---elements in the List; that is, it must be asymmetric and transitive.
 ---Otherwise, no valid sort may be possible.
 ---
 ---The sort algorithm is not stable: elements considered equal by the given
@@ -182,12 +182,12 @@ function Blocks:new(blocks)
    return blocks
 end
 
----Applies a Lua filter to the Blocks list. Just as for
+---Applies a Lua filter to the Blocks List. Just as for
 ---full-document filters, the order in which elements are
 ---traversed can be controlled by setting the 'traverse' field
----of the filter. The filter is applied to all list items
----and to the list itself. Returns a (deep) copy on which
----the filter has been  applied: the original list is left
+---of the filter. The filter is applied to all List items
+---and to the List itself. Returns a (deep) copy on which
+---the filter has been  applied: the original List is left
 ---untouched.
 ---@param filter Filter
 ---@return Blocks
@@ -199,7 +199,7 @@ function Blocks:walk(filter) end
 ---@field t 'BlockQuote'
 
 ---@class (exact) BulletList
----@field content (List<(Blocks | Block[])> | (Blocks | Block[])[])  list items, list of a list of block-level elements
+---@field content (List<(Blocks | Block[])> | (Blocks | Block[])[])  List items, List of a List of block-level elements
 ---@field tag 'BulletList'
 ---@field t 'BulletList'
 
@@ -251,16 +251,16 @@ function Blocks:walk(filter) end
 ---@field t 'HorizontalRule'
 
 ---@class (exact) LineBlock
----@field content (Inlines | Inline[]) list of lines, i.e. list of inline elements
+---@field content (Inlines | Inline[])  List of lines, i.e. List of inline elements
 ---@field tag 'LineBlock'
 ---@field t 'LineBlock'
 
 ---@class (exact) OrderedList
----@field content (List<(Blocks | Block[])> | (Blocks | Block[])[])  list items, list of a list of block-level elements
----@field listAttributes ListAttributes list parameters
----@field start integer alias for `listAttributes.start`
----@field style string alias for `listAttributes.style`
----@field delimiter string alias for `listAttributes.delimiter`
+---@field content        (List<(Blocks | Block[])> | (Blocks | Block[])[])  List items, List of a List of block-level elements
+---@field listAttributes ListAttributes                                     List parameters
+---@field start          integer                                            alias for `listAttributes.start`
+---@field style          string                                             alias for `listAttributes.style`
+---@field delimiter      string                                             alias for `listAttributes.delimiter`
 
 ---@class (exact) Para
 ---@field content (Inlines | Inline[]) inline content
@@ -329,20 +329,20 @@ function Inlines:new(inlines)
    return inlines
 end
 
----Applies a Lua filter to the Inlines list. Just as for
+---Applies a Lua filter to the Inlines List. Just as for
 ---full-document filters, the order in which elements are
 ---traversed can be controlled by setting the 'traverse' field
----of the filter. The filter is applied to all list items
----and to the list itself. Returns a (deep) copy on which
----the filter has been  applied: the original list is left
+---of the filter. The filter is applied to all List items
+---and to the List itself. Returns a (deep) copy on which
+---the filter has been  applied: the original List is left
 ---untouched.
 ---@param filter Filter
 ---@return Inlines
 function Inlines:walk(filter) end
 
 ---@class (exact) Cite
----@field content (Inlines | Inline[]) citation content
----@field citations (List<Citation> | Citation[]) list of citations
+---@field content (Inlines | Inline[])             citation content
+---@field citations (List<Citation> | Citation[])  List of citations
 ---@field tag 'Cite'
 ---@field t 'Cite'
 
@@ -507,28 +507,28 @@ function Inlines:walk(filter) end
 ---@alias ListNumberDelim ('DefaultDelim' | 'Period' | 'OneParen' | 'TwoParens')
 
 ---@class (exact) Row A table row.
----@field attr Attr element attributes
----@field cells (List<Cell> | Cell[]) list of table cells
+---@field attr  Attr                   element attributes
+---@field cells (List<Cell> | Cell[])  List of table cells
 
 ---@class (exact) TableBody A body of a table, with an intermediate head and the specified number of row header columns.
----@field attr Attr table body attributes
----@field body (List<Cell> | Row[]) table body rows
----@field head (List<Row> | Row[]) intermediate head
----@field row_head_columns number Number of columns taken up by the row head of each row of a TableBody. The row body takes up the remaining columns.
+---@field attr             Attr                  table body attributes
+---@field body             (List<Cell> | Row[])  table body rows
+---@field head             (List<Row> | Row[])   intermediate head
+---@field row_head_columns number                Number of columns taken up by the row head of each row of a TableBody. The row body takes up the remaining columns.
 
 ---@class (exact) TableFoot The foot of a table.
----@field attr Attr table foot attributes
----@field rows (List<Row> | Row[]) list of rows
----@field identifier string alias for `attr.identifier`
----@field classes (List<string> | string[]) alias for `attr.classes`
----@field attributes Attributes alias for `attr.attributes`
+---@field attr       Attr                       table foot attributes
+---@field rows       (List<Row> | Row[])        List of rows
+---@field identifier string                     alias for `attr.identifier`
+---@field classes    (List<string> | string[])  alias for `attr.classes`
+---@field attributes Attributes                 alias for `attr.attributes`
 
 ---@class (exact) TableHead The head of a table.
----@field attr Attr table head attributes
----@field rows (List<Row> | Row[]) list of rows
----@field identifier string alias for `attr.identifier`
----@field classes (List<string> | string[]) alias for `attr.classes`
----@field attributes Attributes alias for `attr.attributes`
+---@field attr       Attr                       table head attributes
+---@field rows       (List<Row> | Row[])        List of rows
+---@field identifier string                     alias for `attr.identifier`
+---@field classes    (List<string> | string[])  alias for `attr.classes`
+---@field attributes Attributes                 alias for `attr.attributes`
 
 
 -- Other types -------------------------------------------------------------------------------------
