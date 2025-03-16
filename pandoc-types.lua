@@ -20,6 +20,137 @@
 ---@alias Meta {[string]: any}
 
 
+-- List --------------------------------------------------------------------------------------------
+
+---@class List<T>: {[integer]: T} A Pandoc List
+---@operator concat(List): List
+pandoc.List = {}
+pandoc.List.__index = pandoc.List
+pandoc.List.__name = 'List'
+pandoc.List.__call = pandoc.List.new
+
+---Creates a table which will be treated by pandoc as a List rather than a Map.
+---This is useful when passing an empty table as a MetaValue to ensure it is
+---treated as a List. It is also useful for making List methods such as `find`,
+---`filter`, `includes`, `insert`, `map`, `remove`, and `sort` available on an
+---existing array, as well as the metamethods `__concat` and `__eq`, which allow
+---for concatenation and to test for equality of lists.
+---@param tbl table
+---@return List
+function pandoc.List:new(tbl)
+   setmetatable(tbl, self)
+   return tbl
+end
+
+---Returns the element at the given index, or `default`
+---if the list contains no item at the given position.
+---@generic T
+---@param self List<T>
+---@param index integer
+---@param default? T
+---@return T | nil
+function pandoc.List:at(index, default) end
+
+---Returns a shallow copy of the list. (To get a deep copy, use `walk` with an empty filter.)
+---@generic T
+---@self List<T>
+---@return List<T>
+function pandoc.List:clone() end
+
+---Adds the given list to the end of this list. The same can be achieved by using
+---the concatenation operator (`..`).
+---@generic T
+---@param list List<T>
+---@return List<T>
+function pandoc.List:extend(list) end
+
+---Returns the value and index of the first occurrence of the given item.
+---@generic T
+---@param needle T      item to search for
+---@param init integer  index at which the search is started
+---@return T, integer | nil
+function pandoc.List:find(needle, init) end
+
+---Returns the value and index of the first element for which the predicate holds true.
+---@generic T
+---@param self List<T>
+---@param pred fun(T): boolean  the predicate function
+---@param init integer          index at which the search is started
+---@return T, integer | nil
+function pandoc.List:find_if(pred, init) end
+
+---Returns a new list containing all items satisfying a given condition.
+---@generic T
+---@param self List<T>
+---@param pred fun(T): boolean  the predicate function
+---@return List<T>
+function pandoc.List:filter(pred) end
+
+---Checks if the List has an item equal to the given needle.
+---@generic T
+---@param self List<T>
+---@param needle T       item to search for
+---@param init? integer  index at which the search is started
+---@return boolean
+function pandoc.List:includes(needle, init) end
+
+---Inserts element `value` at position `pos` in list, shifting elements to the next-greater index if necessary.
+---This function is identical to `table.insert`.
+---@generic T
+---@param pos? integer  index of new value; defaults to length of the list + 1
+---@param value T       value to insert into the list
+function pandoc.List:insert(pos, value) end
+
+---Create an iterator over the list. The resulting function returns the next value each time it is called.
+---
+---Usage:
+---```
+---for item in List{1, 1, 2, 3, 5, 8}:iter() do
+---  -- process item
+---end
+---```
+---@generic T
+---@param self List<T>
+---@param step? integer  step width with which to step through the list; negative step sizes cause the iterator to start from the end of the list; defaults to 1
+---@return fun(): T
+function pandoc.List:iter(step) end
+
+---Returns a copy of the current list by applying the given function to all elements.
+---@generic T
+---@param self List<T>
+---@param fn fun(T): T  function which is applied to all list items
+---@return List<T>
+function pandoc.List:map(fn) end
+
+---Removes the element at position `pos`, returning the value of the removed element.
+---This function is identical to `table.remove`.
+---@generic T
+---@param self List<T>
+---@param pos integer  position of the list value to be removed; defaults to the index of the last element
+---@return List<T>
+function pandoc.List:remove(pos) end
+
+---Sorts list elements in a given order, in-place. If `comp` is given, then it
+---must be a function that receives two list elements and returns `true` when
+---the first element must come before the second in the final order (so that,
+---after the sort, `i < j` implies `not comp(list[j],list[i]))`. If `comp` is
+---not given, then the standard Lua operator `<` is used instead.
+---
+---Note that the comp function must define a strict partial order over the
+---elements in the list; that is, it must be asymmetric and transitive.
+---Otherwise, no valid sort may be possible.
+---
+---The sort algorithm is not stable: elements considered equal by the given
+---order may have their relative positions changed by the sort.
+---
+---This function is identical to `table.sort`.
+---@generic T
+---@param self List<T>
+---@param comp? fun(T, T): boolean  comparison function
+---@return List<T>
+function pandoc.List:sort(comp) end
+
+
 -- Blocks ------------------------------------------------------------------------------------------
 
 ---@alias Block
@@ -38,7 +169,7 @@
 ---| RawBlock
 ---| Table
 
----@class Blocks
+---@class Blocks: List<Block> A List of block-level elements
 Blocks = {}
 Blocks.__index = Blocks
 Blocks.__name = 'Blocks'
@@ -63,12 +194,12 @@ end
 function Blocks:walk(filter) end
 
 ---@class (exact) BlockQuote
----@field content (Blocks | Block[]) block content
+---@field content (Blocks | Block[])  block content
 ---@field tag 'BlockQuote'
 ---@field t 'BlockQuote'
 
 ---@class (exact) BulletList
----@field content (Blocks | Block[])[] list items, list of a list of block-level elements
+---@field content (List<(Blocks | Block[])> | (Blocks | Block[])[])  list items, list of a list of block-level elements
 ---@field tag 'BulletList'
 ---@field t 'BulletList'
 
@@ -76,13 +207,13 @@ function Blocks:walk(filter) end
 ---@field text string code string
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'CodeBlock'
 ---@field t 'CodeBlock'
 
 ---@class (exact) DefinitionList
----@field content [(Inlines | Inline[]), (Blocks | Block[])][] a list of tuples, where a tuple consists of a list of inline-level elements, and list of a list of block-level elements 
+---@field content (List<[(Inlines | Inline[]), (Blocks | Block[])]> | [(Inlines | Inline[]), (Blocks | Block[])][]) a List of tuples, where a tuple consists of a List of inline-level elements, and List of a List of block-level elements 
 ---@field tag 'DefinitionList'
 ---@field t 'DefinitionList'
 
@@ -90,7 +221,7 @@ function Blocks:walk(filter) end
 ---@field content (Blocks | Block[]) block content
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Div'
 ---@field t 'Div'
@@ -100,7 +231,7 @@ function Blocks:walk(filter) end
 ---@field caption Caption
 ---@field attr Attr
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Figure'
 ---@field t 'Figure'
@@ -110,7 +241,7 @@ function Blocks:walk(filter) end
 ---@field content (Inlines | Inline[]) inline content
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Header'
 ---@field t 'Header'
@@ -125,7 +256,7 @@ function Blocks:walk(filter) end
 ---@field t 'LineBlock'
 
 ---@class (exact) OrderedList
----@field content (Blocks | Block[])[] list items, list of a list of block-level elements
+---@field content (List<(Blocks | Block[])> | (Blocks | Block[])[])  list items, list of a list of block-level elements
 ---@field listAttributes ListAttributes list parameters
 ---@field start integer alias for `listAttributes.start`
 ---@field style string alias for `listAttributes.style`
@@ -152,10 +283,10 @@ function Blocks:walk(filter) end
 ---@field caption Caption table caption
 ---@field colspecs ColSpec column specifications, i.e. alignments and widths
 ---@field head TableHead table head
----@field bodies TableBody[] table bodies
+---@field bodies (List<TableBody> | TableBody[]) table bodies
 ---@field foot TableFoot table foot
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Table'
 ---@field t 'Table'
@@ -185,7 +316,7 @@ function Blocks:walk(filter) end
 ---| Superscript
 ---| Underline
 
----@class Inlines
+---@class Inlines: List<Inline> A List of inline elements
 Inlines = {}
 Inlines.__index = Inlines
 Inlines.__name = 'Inlines'
@@ -211,7 +342,7 @@ function Inlines:walk(filter) end
 
 ---@class (exact) Cite
 ---@field content (Inlines | Inline[]) citation content
----@field citations Citation[] list of citations
+---@field citations (List<Citation> | Citation[]) list of citations
 ---@field tag 'Cite'
 ---@field t 'Cite'
 
@@ -219,7 +350,7 @@ function Inlines:walk(filter) end
 ---@field text string code string
 ---@field attr Attr attributes
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Code'
 ---@field t 'Code'
@@ -235,7 +366,7 @@ function Inlines:walk(filter) end
 ---@field title string brief image description
 ---@field attr Attr attributes
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Image'
 ---@field t 'Image'
@@ -250,7 +381,7 @@ function Inlines:walk(filter) end
 ---@field target string the link target
 ---@field title string brief link description
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Link'
 ---@field t 'Link'
@@ -295,7 +426,7 @@ function Inlines:walk(filter) end
 ---@field attr Attr attributes
 ---@field content (Inlines | Inline[]) wrapped content
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 ---@field tag 'Span'
 ---@field t 'Span'
@@ -336,7 +467,7 @@ function Inlines:walk(filter) end
 
 ---@class (exact) Attr
 ---@field identifier string element identifier
----@field classes string[] element classes
+---@field classes (List<string> | string[]) element classes
 ---@field attributes Attributes element attributes
 
 ---@alias Attributes table<string, string> collection of key/value pairs
@@ -351,7 +482,7 @@ function Inlines:walk(filter) end
 ---@field col_span integer number of columns spanned by the cell; the width of the cell in columns
 ---@field row_span integer number of rows spanned by the cell; the height of the cell in rows
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 
 ---@class (exact) Citation
@@ -377,26 +508,26 @@ function Inlines:walk(filter) end
 
 ---@class (exact) Row A table row.
 ---@field attr Attr element attributes
----@field cells Cell[] list of table cells
+---@field cells (List<Cell> | Cell[]) list of table cells
 
 ---@class (exact) TableBody A body of a table, with an intermediate head and the specified number of row header columns.
 ---@field attr Attr table body attributes
----@field body Row[] table body rows
----@field head Row[] intermediate head
+---@field body (List<Cell> | Row[]) table body rows
+---@field head (List<Row> | Row[]) intermediate head
 ---@field row_head_columns number Number of columns taken up by the row head of each row of a TableBody. The row body takes up the remaining columns.
 
 ---@class (exact) TableFoot The foot of a table.
 ---@field attr Attr table foot attributes
----@field rows Row[] list of rows
+---@field rows (List<Row> | Row[]) list of rows
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 
 ---@class (exact) TableHead The head of a table.
 ---@field attr Attr table head attributes
----@field rows Row[] list of rows
+---@field rows (List<Row> | Row[]) list of rows
 ---@field identifier string alias for `attr.identifier`
----@field classes string[] alias for `attr.classes`
+---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 
 
@@ -412,14 +543,14 @@ function Inlines:walk(filter) end
 -- similar...).
 
 ---@class (exact) ReaderOptions
----@field abbreviations?           string[]           set of known abbreviations
----@field columns?                 integer            number of columns in terminal
----@field default_image_extension? string             default extension for images
----@field indented_code_classes?   string[]           default classes for indented code blocks
----@field standalone?              boolean            whether the input was a standalone document with header
----@field strip_comments?          boolean            whether HTML comments were stripped instead of parsed as raw HTML
----@field tab_stop?                integer            width (i.e. equivalent number of spaces) of tab stops
----@field track_changes?           TrackChangesOption track changes setting for docx
+---@field abbreviations?           (List<string> | string[])  set of known abbreviations
+---@field columns?                 integer                    number of columns in terminal
+---@field default_image_extension? string                     default extension for images
+---@field indented_code_classes?   (List<string> | string[])  default classes for indented code blocks
+---@field standalone?              boolean                    whether the input was a standalone document with header
+---@field strip_comments?          boolean                    whether HTML comments were stripped instead of parsed as raw HTML
+---@field tab_stop?                integer                    width (i.e. equivalent number of spaces) of tab stops
+---@field track_changes?           TrackChangesOption         track changes setting for docx
 
 ---@alias TrackChangesOption
 ---| 'accept-changes'
@@ -454,44 +585,44 @@ function Inlines:walk(filter) end
 ---| 'tagging'
 
 ---@class (exact) WriterOptions
----@field chunk_template?     string                 template used to generate chunked HTML filenames
----@field cite_method?        CiteMethod             how to print cites
----@field columns?            integer                number of characters in a line (for text wrapping)
----@field dpi?                integer                DPI for pixel to/from inch/cm conversions
----@field email_obfuscation?  EmailObfuscationMethod how to obfuscate emails
----@field epub_chapter_level? integer                header level for chapters, i.e. how the document is split into separate files
----@field epub_fonts?         string[]               paths to fonts to embed
----@field epub_metadata?      (string | nil)         metadata to include in EPUB
----@field epub_subdirectory?  string                 subdirectory for epub in OCF
----@field extensions?         Extension[]            writer extensions to use
----@field highlight_style?    (table | nil)          style to use for syntax highlighting
----@field html_math_method?   HTMLMathMethod         how to print math in HTML
----@field html_q_tags?        boolean                whether to use `<q>` tags for quotes in HTML
----@field identifier_prefix?  string                 prefix for section and note ids in HTML and for footnote marks in markdown
----@field incremental?        boolean                whether lists in slide shows should be displayed incrementally
----@field listings?           boolean                whether to use listings package for code
----@field number_offset?      integer[]              starting numbers for section, subsection, ...
----@field number_sections?    boolean                whether to number sections in LaTeX
----@field prefer_ascii?       boolean                whether to prefer ASCII representations of characters when possible
----@field reference_doc?      (string | nil)         path to reference document if specified
----@field reference_links?    boolean                whether to use reference links in writing markdown, rst
----@field reference_location? ReferenceLocation      location of footnotes and references for writing markdown
----@field section_divs?       boolean                whether to put sections in div tags in HTML
----@field setext_headers?     boolean                whether to use setext headers for levels 1-2 in markdown
----@field slide_level?        (integer | nil)        force header level of slides
----@field tab_stop?           integer                number of spaces per tab for conversion between spaces and tabs
----@field table_of_contents?  boolean                whether to include table of contents
----@field template?           (Template | nil)       template to use
----@field toc_depth?          integer                number of levels to include in TOC
----@field top_level_division? TopLevelDivision       type of top-level divisions
----@field variables?          table<string, any>     variables to set in template
----@field wrap_text?          TextWrapMethod         option for wrapping text
+---@field chunk_template?     string                           template used to generate chunked HTML filenames
+---@field cite_method?        CiteMethod                       how to print cites
+---@field columns?            integer                          number of characters in a line (for text wrapping)
+---@field dpi?                integer                          DPI for pixel to/from inch/cm conversions
+---@field email_obfuscation?  EmailObfuscationMethod           how to obfuscate emails
+---@field epub_chapter_level? integer                          header level for chapters, i.e. how the document is split into separate files
+---@field epub_fonts?         (List<string> | string[])        paths to fonts to embed
+---@field epub_metadata?      (string | nil)                   metadata to include in EPUB
+---@field epub_subdirectory?  string                           subdirectory for epub in OCF
+---@field extensions?         (List<Extension> | Extension[])  writer extensions to use
+---@field highlight_style?    (table | nil)                    style to use for syntax highlighting
+---@field html_math_method?   HTMLMathMethod                   how to print math in HTML
+---@field html_q_tags?        boolean                          whether to use `<q>` tags for quotes in HTML
+---@field identifier_prefix?  string                           prefix for section and note ids in HTML and for footnote marks in markdown
+---@field incremental?        boolean                          whether lists in slide shows should be displayed incrementally
+---@field listings?           boolean                          whether to use listings package for code
+---@field number_offset?      (List<integer> | integer[])      starting numbers for section, subsection, ...
+---@field number_sections?    boolean                          whether to number sections in LaTeX
+---@field prefer_ascii?       boolean                          whether to prefer ASCII representations of characters when possible
+---@field reference_doc?      (string | nil)                   path to reference document if specified
+---@field reference_links?    boolean                          whether to use reference links in writing markdown, rst
+---@field reference_location? ReferenceLocation                location of footnotes and references for writing markdown
+---@field section_divs?       boolean                          whether to put sections in div tags in HTML
+---@field setext_headers?     boolean                          whether to use setext headers for levels 1-2 in markdown
+---@field slide_level?        (integer | nil)                  force header level of slides
+---@field tab_stop?           integer                          number of spaces per tab for conversion between spaces and tabs
+---@field table_of_contents?  boolean                          whether to include table of contents
+---@field template?           (Template | nil)                 template to use
+---@field toc_depth?          integer                          number of levels to include in TOC
+---@field top_level_division? TopLevelDivision                 type of top-level divisions
+---@field variables?          table<string, any>               variables to set in template
+---@field wrap_text?          TextWrapMethod                   option for wrapping text
 
----@alias CiteMethod ('citeproc' | 'natbib' | 'biblatex')
+---@alias CiteMethod             ('citeproc' | 'natbib' | 'biblatex')
 ---@alias EmailObfuscationMethod ('none' | 'references' | 'javascript')
----@alias ReferenceLocation ('end-of-block' | 'block' | 'end-of-section' | 'section' | 'end-of-document' | 'document')
----@alias TopLevelDivision ('top-level-part' | 'part' | 'top-level-chapter' | 'chapter' | 'top-level-section' | 'section' | 'top-level-default' | 'default')
----@alias TextWrapMethod ('wrap-auto' | 'auto' | 'wrap-none' | 'none' | 'wrap-preserve' | 'preserve')
+---@alias ReferenceLocation      ('end-of-block' | 'block' | 'end-of-section' | 'section' | 'end-of-document' | 'document')
+---@alias TopLevelDivision       ('top-level-part' | 'part' | 'top-level-chapter' | 'chapter' | 'top-level-section' | 'section' | 'top-level-default' | 'default')
+---@alias TextWrapMethod         ('wrap-auto' | 'auto' | 'wrap-none' | 'none' | 'wrap-preserve' | 'preserve')
 
 ---@alias HTMLMathMethod
 ---| 'plain'
@@ -503,34 +634,19 @@ function Inlines:walk(filter) end
 ---| { method: ('plain' | 'mathjax' | 'mathml' | 'webtex' | 'katex' | 'gladtex'), url: string }
 
 ---@class (exact) CommonState
----@field input_files     string[]           list of input files from command line
----@field output_file     (string | nil)     output file from command line
----@field log             LogMessage[]       list of log messages in reverse order
----@field request_headers {[string]: string} headers to add for HTTP requests; table with header names as keys and header contents as values
----@field resource_path   string[]           path to search for resources like included images
----@field source_url      (string | nil)     absolute URL or directory of first source file
----@field user_data_dir   (string | nil)     directory to search for data files
----@field trace           boolean            whether tracing messages are issued
----@field verbosity       Verbosity          verbosity level
+---@field input_files     (List<string> | string[])          list of input files from command line
+---@field output_file     (string | nil)                     output file from command line
+---@field log             (List<LogMessage> | LogMessage[])  list of log messages in reverse order
+---@field request_headers {[string]: string}                 headers to add for HTTP requests; table with header names as keys and header contents as values
+---@field resource_path   (List<string> | string[])          path to search for resources like included images
+---@field source_url      (string | nil)                     absolute URL or directory of first source file
+---@field user_data_dir   (string | nil)                     directory to search for data files
+---@field trace           boolean                            whether tracing messages are issued
+---@field verbosity       Verbosity                          verbosity level
 
 ---@alias Verbosity ('INFO' | 'WARNING' | 'ERROR')
 
 -- TBD: Doc
-
----@class List
-List = {}
-List.__index = List
-List.__name = 'List'
-
----List constructor
----@param list List
----@return List
-function List:new(list)
-   setmetatable(list, self)
-   return list
-end
-
--- TBD: missing List methods
 
 ---@class LogMessage A pandoc log message. It has no fields, but can be converted to a string via `tostring`.
 
@@ -897,14 +1013,6 @@ pandoc.TableFoot = function(rows, attr) end
 ---@param attr Attr table head attributes
 ---@return TableHead
 pandoc.TableHead = function(rows, attr) end
-
--- TBD: improve description of function --- mention available List methods.
----Creates a table which will be treated by pandoc as a List rather than a Map.
----This is useful when passing an empty table as a MetaValue to ensure it is treated as a List.
----Sets the table's metatable, which has the field `__name` with value 'List'.
----@param tbl table
----@return List
-pandoc.List = function(tbl) end
 
 -- TBD: SimpleTable
 ---Creates a SimpleTable object.
