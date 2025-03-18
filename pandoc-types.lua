@@ -24,6 +24,7 @@
 
 ---@class List<T>: {[integer]: T} A Pandoc List
 ---@operator concat(List): List
+---@overload fun(tbl: table): List
 pandoc.List = {}
 pandoc.List.__index = pandoc.List
 pandoc.List.__name = 'List'
@@ -664,7 +665,18 @@ Version = {}
 ---@param error_message? string   optional error message template --- the string is used as format string, with the expected and actual versions as arguments; defaults to ``"expected version %s or newer, got %s"`
 Version.must_be_at_least = function(actual, expected, error_message) end
 
--- TBD: Chunk
+---@class (exact) Chunk
+---@field heading        Inlines        heading text
+---@field id             string         identifier
+---@field level          integer        level of topmost heading in chunk
+---@field number         integer        chunk number
+---@field section_number string         hierarchical section number
+---@field path           string         target filepath for this chunk
+---@field up             (Chunk | nil)  link to the enclosing section, if any
+---@field prev           (Chunk | nil)  link to the previous section, if any
+---@field next           (Chunk | nil)  link to the next section, if any
+---@field unlisted       boolean        whether the section in this chunk should be listed in the TOC even if the chunk has no section number
+---@field contents       Blocks         the chunk's block contents
 
 -- TBD: ChunkedDoc
 
@@ -865,7 +877,7 @@ pandoc.RawBlock = function(format, text) end
 ---@return Table
 pandoc.Table = function(caption, colspecs, head, bodies, foot, attr) end
 
----Creates a list of Blocks.
+---Creates a List of Blocks.
 ---@param block_like_elements (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) list where each element can be treated as a Block, or a single such value
 ---@return Blocks
 pandoc.Blocks = function(block_like_elements) end
@@ -979,7 +991,7 @@ pandoc.Superscript = function(content) end
 ---@return Underline
 pandoc.Underline = function(content) end
 
----Creates a list of Inlines.
+---Creates a List of Inlines.
 ---@param inline_like_elements (Inlines | Inline[] | Inline | string[] | string)
 ---@return Inlines
 pandoc.Inlines = function(inline_like_elements) end
