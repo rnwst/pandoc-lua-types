@@ -654,7 +654,15 @@ function Inlines:walk(filter) end
 
 ---@class Template opaque type holding a compiled template
 
--- TBD: Version
+---@class Version: {[integer]: integer}
+Version = {}
+--
+---Raise an error message if the actual version is older than the expected version;
+---does nothing if actual is equal to or newer than the expected version.
+---@param actual         Version  actual version specifier
+---@param expected       Version  minimum expected version
+---@param error_message? string   optional error message template --- the string is used as format string, with the expected and actual versions as arguments; defaults to ``"expected version %s or newer, got %s"`
+Version.must_be_at_least = function(actual, expected, error_message) end
 
 -- TBD: Chunk
 
@@ -663,11 +671,32 @@ function Inlines:walk(filter) end
 
 -- Globals =============================================================================================================
 
+---@type string
+FORMAT = ''
+
 ---@type WriterOptions
 PANDOC_WRITER_OPTIONS = {}
 
+---@type ReaderOptions
+PANDOC_READER_OPTIONS = {}
+
+---@type Version
+PANDOC_VERSION = {}
+
+---@type Version
+PANDOC_API_VERSION = {}
+
 ---@type string
-FORMAT = ''
+PANDOC_SCRIPT_FILE = ''
+
+---@type CommonState
+PANDOC_STATE = {}
+
+-- lpeg type definitions have been added as a submodule.
+lpeg = require('lpeg.library.lpeg')
+
+-- Sadly, I wasn't able to find type definitions for the LPeg.re module.
+re = {}
 
 
 -- Filters =============================================================================================================
