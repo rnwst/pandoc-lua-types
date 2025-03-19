@@ -647,11 +647,20 @@ function Inlines:walk(filter) end
 
 ---@alias Verbosity ('INFO' | 'WARNING' | 'ERROR')
 
--- TBD: Doc
+---@class Doc Reflowable plain-text document. A Doc value can be rendered and reflown to fit a given column width.
+---@operator concat(Doc): Doc 
+---@operator add(Doc): Doc
+---@operator div(Doc): Doc
+---@operator idiv(Doc): Doc
 
 ---@class LogMessage A pandoc log message. It has no fields, but can be converted to a string via `tostring`.
 
--- TBD: SimpleTable
+---@class (exact) SimpleTable
+---@field caption Inlines          table caption
+---@field aligns  List<Alignment>  column alignments
+---@field widths  List<number>     column widths
+---@field headers Blocks           table header row
+---@field rows    Blocks           table rows
 
 ---@class Template opaque type holding a compiled template
 
@@ -678,7 +687,17 @@ Version.must_be_at_least = function(actual, expected, error_message) end
 ---@field unlisted       boolean        whether the section in this chunk should be listed in the TOC even if the chunk has no section number
 ---@field contents       Blocks         the chunk's block contents
 
--- TBD: ChunkedDoc
+---@class (exact) ChunkedDoc
+---@field chunks List<Chunk>    List of chunks that makes up the document
+---@field meta   Meta           the document's metadata
+---@field toc    List<SecInfo>  table of contents information
+
+---@class (exact) SecInfo
+---@field title    Inlines
+---@field number   (string | nil)
+---@field id       string
+---@field path     string
+---@field level    integer
 
 
 -- Globals =============================================================================================================
