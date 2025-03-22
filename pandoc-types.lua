@@ -1074,25 +1074,50 @@ pandoc.TableFoot = function(rows, attr) end
 ---@return TableHead
 pandoc.TableHead = function(rows, attr) end
 
--- TBD: SimpleTable
 ---Creates a SimpleTable object.
+---@param caption (Inlines | Inline[] | Inline | string[] | string)  table caption
+---@param align   Alignment[]                                        column alignments
+---@param widths  number[]                                           relative column widths
+---@param header  (Block[])[]                                        table header row
+---@param rows    (Block[])[]                                        table rows
+---@return SimpleTable
 pandoc.SimpleTable = function(caption, align, widths, header, rows) end
 
 
 -- Other constructors ------------------------------------------------------------------------------
 
--- TBD: ReaderOptions
+---Creates a new `ReaderOptions` value.
+---@param opts ReaderOptions  Either a table with a subset of the properties of a `ReaderOptions` object, or another `ReaderOptions` object. Uses the defaults specified in the manual for all properties that are not explicitly specified.
+---@return ReaderOptions
+pandoc.ReaderOptions = function(opts) end
 
--- TBD: WriterOptions
+---Creates a new `WriterOptions` values.
+---@param opts WriterOptions  Either a table with a subset of the properties of a `WriterOptions` object, or another `WriterOptions` object. Uses the defaults specified in the manual for all properties that are not explicitly specified.
+---@return WriterOptions
+pandoc.WriterOptions = function(opts) end
 
 
 -- Helper functions --------------------------------------------------------------------------------
 
--- TBD: pipe
+---Runs command with arguments, passing it some input, and returns the output.
+---@param command string    program to run; the executable will be resolved using default system methods
+---@param args    string[]  List of arguments to pass to the program
+---@param input any
+pandoc.pipe = function(command, args, input) end
 
--- TBD: walk_block
+---Apply a filter inside a block-level element, walking its contents. Returns a (deep) copy on which the filter has been applied: the original element is left untouched.
+---@generic T: Block
+---@param block  `T`     the block element
+---@param filter Filter  Lua filter to be applied within the block element
+---@return T
+pandoc.walk_block = function(block, filter) end
 
--- TBD: walk_inline
+---Apply a filter inside an inline-level element, walking its contents. Returns a (deep) copy on which the filter has been applied: the original element is left untouched.
+---@generic T: Inline
+---@param inline `T`     the block element
+---@param filter Filter  Lua filter to be applied within the block element
+---@return T
+pandoc.walk_inline = function(inline, filter) end
 
 ---Parses the given string into a Pandoc document.
 ---@param markup string The markup to be parsed.
@@ -1108,7 +1133,11 @@ pandoc.read = function(markup, format, reader_options) end
 ---@return string
 pandoc.write = function(doc, format, writer_options) end
 
--- TBD: write_classic
+---Runs a classic custom Lua writer, using the functions defined in the current environment.
+---@param doc             Pandoc         document to convert
+---@param writer_options? WriterOptions  options passed to the writer; may be a `WriterOptions` object or a table with a subset of th ekeys and values of a `WriterOptions` object; defaults to the default values documented in the manual 
+pandoc.write_classic = function(doc, writer_options) end
+
 
 -- Other modules =======================================================================================================
 
