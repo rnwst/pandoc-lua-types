@@ -379,7 +379,7 @@ pandoc.write_classic = function(doc, writer_options) end
 
 -- TBD: pandoc.log
 
--- TBD: pandoc.path
+pandoc.path = require('pandoc.path')
 
 -- TBD: pandoc.structure
 
