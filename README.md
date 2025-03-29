@@ -37,7 +37,7 @@ end
 ```
 Apart from individual Block and Inline element types, the types `Block` and `Inline` have also been defined, which act as an alias for any Block or Inline element, respectively.
 
-For sequences of Blocks and Inlines, the `Blocks` and `Inlines` types are available. They differ from `Block[]` and `Inline[]` by having the [`walk`](https://pandoc.org/lua-filters.html#type-blocks:walk) and [`clone`](https://pandoc.org/lua-filters.html#clone) methods. When a filter function is receiving Inlines, they are of type `Inlines`, but if you are returning a table of Inline elements, they are of type `Inline[]`:
+For sequences of Blocks and Inlines, the `Blocks` and `Inlines` types are available. They differ from `Block[]` and `Inline[]` by having the [`walk`](https://pandoc.org/lua-filters.html#type-blocks:walk) and [`clone`](https://pandoc.org/lua-filters.html#clone) methods available on them, as well as all the [`List`](https://pandoc.org/lua-filters.html#module-pandoc.list)-methods (such as metamethods [`__concat`](https://pandoc.org/lua-filters.html#pandoc.list:__concat) and [`__eq`](https://pandoc.org/lua-filters.html#pandoc.list:__eq), and methods [`extend`](https://pandoc.org/lua-filters.html#pandoc.list:extend), [`filter`](https://pandoc.org/lua-filters.html#pandoc.list:filter), [`includes`](https://pandoc.org/lua-filters.html#pandoc.list:includes), ...). When a filter function is receiving Inlines, they are of type `Inlines`, but if you are returning a table of Inline elements as in the following example, they are of type `Inline[]`:
 ```Lua
 ---Filter function for Inlines
 ---@param inlines Inlines
@@ -48,12 +48,14 @@ end
 ```
 If you are unsure if your return value is of type `Inline[]` or `Inlines`, you can annotate it as `Inlines | Inline[]`, which covers both types.
 
-When assigning a `Block` or `Inline` type to a more specific type (such as a Span, as in the following example), the [`@as` annotation](https://luals.github.io/wiki/annotations/#as) is required to avoid a type error diagnostic:
+There is currently a bug in LuaLS preventing it from doing proper type-checking on the contents of a variable of type `Inlines` or `Blocks`. As a workaround, such variables can be assigned the type `(Inlines | Inline[])` (and equivalently for `Blocks`), as in the following example. When assigning a `Block` or `Inline` type to a more specific type (such as a Span, as in the following example), the [`@cast` annotation](https://luals.github.io/wiki/annotations/#cast) can be used to cast the variable to the required type:
 ```Lua
+---Inlines filter function
+---@param inlines (Inlines | Inline[])
 function Inlines(inlines)
    if inlines[1].tag == 'Span' then
-      ---@type Span
-      local span = inlines[1] --[[@as Span]]
+      local span = inlines[1]
+      ---@cast span Span
       ...
    end
    ...
@@ -65,8 +67,8 @@ Type definitions are also available for filters and filter functions. The `Filte
 ---@type Filter
 return {
    traverse = 'topdown',
-   Str = filter_fn2,
-   Para = filter_fn1,
+   Str = filter_fn1,
+   Para = filter_fn2,
 }
 ```
 The `Filter` type is either a `FilterTable`, or an array of `FilterTable`s, or an array of an array of `FilterTable`s, and so on. A `FilterTable` is a table of filter functions (the return value above is an example). Therefore, in the above example, the `---@type FilterTable` annotation could have been used as well (though if a nested table was returned, the `Filter` type would have to be used).
