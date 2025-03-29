@@ -1173,4 +1173,4 @@ pandoc.write_classic = function(doc, writer_options) end
 
 -- TBD: pandoc.types
 
--- TBD: pandoc.zip
+pandoc.zip = require('pandoc.zip')
