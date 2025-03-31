@@ -1,4 +1,3 @@
-
 -- Pandoc type definitions
 -- lua-language-server's type checking is not currently as powerful as it could be - see https://github.com/LuaLS/lua-language-server/issues/3101
 -- That being said, it seems to catch at least 90% of my errors! 
@@ -169,7 +168,7 @@ function pandoc.List:sort(comp) end
 ---| RawBlock
 ---| Table
 
----@class Blocks: List<Block> A List of block-level elements
+---@class Blocks: List<Block>  A List of block-level elements
 Blocks = {}
 Blocks.__index = Blocks
 Blocks.__name = 'Blocks'
@@ -316,7 +315,7 @@ function Blocks:walk(filter) end
 ---| Superscript
 ---| Underline
 
----@class Inlines: List<Inline> A List of inline elements
+---@class Inlines: List<Inline>  A List of inline elements
 Inlines = {}
 Inlines.__index = Inlines
 Inlines.__name = 'Inlines'
