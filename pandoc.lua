@@ -365,7 +365,7 @@ pandoc.write_classic = function(doc, writer_options) end
 -- Other modules =======================================================================================================
 -- These modules are part of the `pandoc` table, or they can be `require`d.
 
--- TBD: pandoc.cli
+pandoc.cli = require('pandoc.cli')
 
 -- TBD: pandoc.utils
 
