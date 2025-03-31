@@ -377,7 +377,7 @@ pandoc.cli = require('pandoc.cli')
 
 -- TBD: pandoc.json
 
--- TBD: pandoc.log
+pandoc.log = require('pandoc.log')
 
 pandoc.path = require('pandoc.path')
 
