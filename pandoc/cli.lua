@@ -8,7 +8,17 @@ cli.default_options = {}
 
 ---Parses command line arguments into pandoc options. Typically, this function
 ---will be used in standalone pandoc Lua scripts, taking the list of arguments
----from the global `arg`.
+---from the global `arg`. Standalone pandoc Lua scripts may be run as follows:
+---```lua
+-- pandoc lua script.lua
+---```
+---or
+---```lua
+---pandoc-lua script.lua
+---```
+-- For more information, see
+---https://pandoc.org/MANUAL.html#running-pandoc-as-a-lua-interpreter.
+---
 ---@param args string[]  list of command line arguments
 ---@return {[string]: any}  parsed pandoc options, using their JSON-like representation
 cli.parse_options = function(args) end
