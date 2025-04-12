@@ -367,7 +367,7 @@ pandoc.write_classic = function(doc, writer_options) end
 
 pandoc.cli = require('pandoc.cli')
 
--- TBD: pandoc.utils
+pandoc.utils = require('pandoc.utils')
 
 -- TBD: pandoc.mediabag
 
@@ -388,8 +388,6 @@ pandoc.path = require('pandoc.path')
 -- TBD: pandoc.layout
 
 -- TBD: pandoc.scaffolding
-
--- TBD: pandoc.text
 
 -- TBD: pandoc.text
 
