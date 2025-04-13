@@ -369,7 +369,7 @@ pandoc.cli = require('pandoc.cli')
 
 pandoc.utils = require('pandoc.utils')
 
--- TBD: pandoc.mediabag
+pandoc.mediabag = require('pandoc.mediabag')
 
 -- TBD: pandoc.format
 

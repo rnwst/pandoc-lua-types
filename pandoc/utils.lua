@@ -169,4 +169,9 @@ utils.to_simple_table = function(tbl) end
 ---@return string  type of the given value
 utils.type = function(value) end
 
+---Creates a [Version](lua://Version) object.
+---@param v (string | integer[] | integer)  version description
+---@return Version
+utils.Version = function(v) end
+
 return utils
