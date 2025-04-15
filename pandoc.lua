@@ -371,7 +371,7 @@ pandoc.utils = require('pandoc.utils')
 
 pandoc.mediabag = require('pandoc.mediabag')
 
--- TBD: pandoc.format
+pandoc.format = require('pandoc.format')
 
 -- TBD: pandoc.image
 
