@@ -65,16 +65,16 @@ function pandoc.List:extend(list) end
 
 ---Returns the value and index of the first occurrence of the given item.
 ---@generic T
----@param needle T      item to search for
----@param init integer  index at which the search is started
+---@param needle T        item to search for
+---@param init?  integer  index at which the search is started
 ---@return T, integer | nil
 function pandoc.List:find(needle, init) end
 
 ---Returns the value and index of the first element for which the predicate holds true.
 ---@generic T
----@param self List<T>
----@param pred fun(T): boolean  the predicate function
----@param init integer          index at which the search is started
+---@param self  List<T>
+---@param pred  fun(T): boolean  the predicate function
+---@param init? integer          index at which the search is started
 ---@return T, integer | nil
 function pandoc.List:find_if(pred, init) end
 
@@ -87,17 +87,18 @@ function pandoc.List:filter(pred) end
 
 ---Checks if the List has an item equal to the given needle.
 ---@generic T
----@param self List<T>
----@param needle T       item to search for
----@param init? integer  index at which the search is started
+---@param self   List<T>
+---@param needle T        item to search for
+---@param init?  integer  index at which the search is started
 ---@return boolean
 function pandoc.List:includes(needle, init) end
 
 ---Inserts element `value` at position `pos` in List, shifting elements to the next-greater index if necessary.
 ---This function is identical to `table.insert`.
 ---@generic T
----@param pos? integer  index of new value; defaults to length of the List + 1
----@param value T       value to insert into the List
+---@param self  List<T>
+---@param pos?  integer  index of new value; defaults to length of the List + 1
+---@param value T        value to insert into the List
 function pandoc.List:insert(pos, value) end
 
 ---Create an iterator over the List. The resulting function returns the next value each time it is called.
