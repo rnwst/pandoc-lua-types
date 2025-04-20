@@ -32,7 +32,7 @@ All of Pandoc's [Block](https://pandoc.org/lua-filters.html#type-block) and [Inl
 function Span(span)
    -- This triggers a type error from LuaLS since the `content` field
    -- is a sequence of Inlines and does not match a string!
-   span.content = 'asdf'
+   span.content = 'foobar'
 end
 ```
 Apart from individual Block and Inline element types, the types `Block` and `Inline` have also been defined, which act as an alias for any Block or Inline element, respectively.
