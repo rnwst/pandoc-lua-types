@@ -259,8 +259,8 @@ function Blocks:walk(filter) end
 ---@field content        (List<(Blocks | Block[])> | (Blocks | Block[])[])  List items, List of a List of block-level elements
 ---@field listAttributes ListAttributes                                     List parameters
 ---@field start          integer                                            alias for `listAttributes.start`
----@field style          string                                             alias for `listAttributes.style`
----@field delimiter      string                                             alias for `listAttributes.delimiter`
+---@field style          ListNumberStyle                                    alias for `listAttributes.style`
+---@field delimiter      ListNumberDelim                                    alias for `listAttributes.delimiter`
 
 ---@class (exact) Para
 ---@field content (Inlines | Inline[]) inline content
