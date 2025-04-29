@@ -375,7 +375,7 @@ pandoc.format = require('pandoc.format')
 
 pandoc.image = require('pandoc.image')
 
--- TBD: pandoc.json
+pandoc.json = require('pandoc.json')
 
 pandoc.log = require('pandoc.log')
 
