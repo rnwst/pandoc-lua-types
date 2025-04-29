@@ -373,7 +373,7 @@ pandoc.mediabag = require('pandoc.mediabag')
 
 pandoc.format = require('pandoc.format')
 
--- TBD: pandoc.image
+pandoc.image = require('pandoc.image')
 
 -- TBD: pandoc.json
 
