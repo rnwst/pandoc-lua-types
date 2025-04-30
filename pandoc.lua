@@ -381,7 +381,7 @@ pandoc.log = require('pandoc.log')
 
 pandoc.path = require('pandoc.path')
 
--- TBD: pandoc.structure
+pandoc.structure = require('pandoc.structure')
 
 -- TBD: pandoc.system
 
