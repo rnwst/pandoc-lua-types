@@ -62,10 +62,10 @@ utils.from_simple_table = function(simple_tbl) end
 ---non-null, `Header` levels will be reorganized so that there are no gaps, and so
 ---that the base level is the level specified.
 ---@param number_sections boolean          whether section divs should bet an additional `number` attribute containing the section number
----@param baselevel       (integer | nil)  shift top-level headings to this level
+---@param base_level      (integer | nil)  shift top-level headings to this level
 ---@param blocks          (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)  list of blocks to process
 ---@return Blocks  blocks with sections
-utils.make_sections = function(number_sections, baselevel, blocks) end
+utils.make_sections = function(number_sections, base_level, blocks) end
 
 ---Parse a date and convert (if possible) to “YYYY-MM-DD” format. We limit years
 ---to the range 1601-9999 (ISO 8601 accepts greater than or equal to 1583, but
