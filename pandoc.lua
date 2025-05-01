@@ -383,7 +383,7 @@ pandoc.path = require('pandoc.path')
 
 pandoc.structure = require('pandoc.structure')
 
--- TBD: pandoc.system
+pandoc.system = require('pandoc.system')
 
 -- TBD: pandoc.layout
 
