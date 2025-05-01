@@ -393,6 +393,6 @@ pandoc.system = require('pandoc.system')
 
 -- TBD: pandoc.template
 
--- TBD: pandoc.types
+pandoc.types = require('pandoc.types')
 
 pandoc.zip = require('pandoc.zip')
