@@ -389,7 +389,7 @@ pandoc.system = require('pandoc.system')
 
 -- TBD: pandoc.scaffolding
 
--- TBD: pandoc.text
+pandoc.text = require('pandoc.text')
 
 -- TBD: pandoc.template
 
