@@ -387,7 +387,7 @@ pandoc.system = require('pandoc.system')
 
 -- TBD: pandoc.layout
 
--- TBD: pandoc.scaffolding
+pandoc.scaffolding = require('pandoc.scaffolding')
 
 pandoc.text = require('pandoc.text')
 
