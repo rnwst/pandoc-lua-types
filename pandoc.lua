@@ -391,7 +391,7 @@ pandoc.scaffolding = require('pandoc.scaffolding')
 
 pandoc.text = require('pandoc.text')
 
--- TBD: pandoc.template
+pandoc.template = require('pandoc.template')
 
 pandoc.types = require('pandoc.types')
 
