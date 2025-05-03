@@ -6,7 +6,7 @@ scaffolding = {}
 ---@overload fun(doc: Pandoc, opts: WriterOptions): string
 scaffolding.Writer = {}
 
----@type fun(blocks: (Blocks | Block[])): string
+---@type fun(blocks: (Blocks | Block[]), sep?: (Doc | string)): string
 scaffolding.Writer.Blocks = function() end
 
 ---@type fun(inlines: (Inlines | Inline[])): string
