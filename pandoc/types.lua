@@ -8,7 +8,7 @@ types = {}
 
 ---Creates a [Version](lua://Version) object.
 ---@param version_specifier (string | integer[] | Version)
----@return Version  new [Version](lua://Version) object
+---@return Version # new [Version](lua://Version) object
 types.Version = function(version_specifier) end
 
 return types

@@ -17,7 +17,7 @@ log.warn = function(message) end
 ---the function call are returned as the first return value, with the results of
 ---the function call following thereafter.
 ---@param message function  function to be silenced
----@return List<string>, any  list of log messages triggered during the function call, and any value returned by the function
+---@return List<string>, any # list of log messages triggered during the function call, and any value returned by the function
 log.silence = function(message) end
 
 return log

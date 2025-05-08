@@ -19,7 +19,7 @@ json.null = {}
 ---`pandoc_types` to `false`.
 ---@param str string     JSON string
 ---@param pandoc_types?  boolean  whether to use pandoc types when possible
----@return any  decoded object
+---@return any # decoded object
 json.decode = function(str, pandoc_types) end
 
 ---Encodes a Lua object as JSON string.
@@ -28,7 +28,7 @@ json.decode = function(str, pandoc_types) end
 ---a call to that method with `object` passed as the sole argument. The result of
 ---that call is expected to be a valid JSON string, but this is not checked.
 ---@param object any
----@return string  JSON encoding of the given object
+---@return string # JSON encoding of the given object
 json.encode = function(object) end
 
 return json

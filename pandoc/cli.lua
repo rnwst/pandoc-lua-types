@@ -20,7 +20,7 @@ cli.default_options = {}
 ---https://pandoc.org/MANUAL.html#running-pandoc-as-a-lua-interpreter.
 ---
 ---@param args string[]  list of command line arguments
----@return {[string]: any}  parsed pandoc options, using their JSON-like representation
+---@return {[string]: any} # parsed pandoc options, using their JSON-like representation
 cli.parse_options = function(args) end
 
 ---Starts a read-eval-print loop (REPL). The function returns all values of the
@@ -46,7 +46,7 @@ cli.parse_options = function(args) end
 ---prompting for user input.
 ---
 ---@param env table  extra environment; the global environment is merged into this table
----@return any  the result(s) of the last evaluated input, or nothing if the last input resulted in an error
+---@return any # the result(s) of the last evaluated input, or nothing if the last input resulted in an error
 cli.repl = function(env) end
 
 return cli

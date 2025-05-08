@@ -37,7 +37,7 @@ utils.blocks_to_inlines = function(blocks, sep) end
 --- end
 --- ```
 ---@param doc Pandoc
----@return Pandoc  processed document
+---@return Pandoc # processed document
 utils.citeproc = function(doc) end
 
 ---Creates a `Table` block element from a `SimpleTable`. This is useful for dealing
@@ -64,7 +64,7 @@ utils.from_simple_table = function(simple_tbl) end
 ---@param number_sections boolean          whether section divs should bet an additional `number` attribute containing the section number
 ---@param base_level      (integer | nil)  shift top-level headings to this level
 ---@param blocks          (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)  list of blocks to process
----@return Blocks  blocks with sections
+---@return Blocks # blocks with sections
 utils.make_sections = function(number_sections, base_level, blocks) end
 
 ---Parse a date and convert (if possible) to “YYYY-MM-DD” format. We limit years
@@ -72,7 +72,7 @@ utils.make_sections = function(number_sections, base_level, blocks) end
 ---MS Word only accepts dates starting 1601). Returns `nil` instead of a `string` if
 ---the conversion failed.
 ---@param date string  the date string
----@return (string | nil)  normalized date, or `nil` if the conversion failed
+---@return (string | nil) # normalized date, or `nil` if the conversion failed
 utils.normalize_date = function(date) end
 
 ---Get references defined inline in the metadata and via an external
@@ -94,7 +94,7 @@ utils.normalize_date = function(date) end
 --- end
 --- ```
 ---@param doc Pandoc
----@return table  list of references
+---@return table # list of references
 utils.references = function(doc) end
 
 ---Filter the given doc by passing it through a JSON filter.
@@ -108,17 +108,17 @@ utils.run_json_filter = function(doc, filter, args) end
 ---@param doc    Pandoc  the Pandoc document to filter
 ---@param filter string  filepath of the filter to run
 ---@param env?   table   environment to load and run the filter in
----@return Pandoc  filtered document
+---@return Pandoc # filtered document
 utils.run_lua_filter = function(doc, filter, env) end
 
 ---Computes the SHA1 hash of the given string input.
 ---@param input string
----@return string  hexadecimal hash value
+---@return string # hexadecimal hash value
 utils.sha1 = function(input) end
 
 ---Converts the given element (`Pandoc`, `Meta`, `Block`, or `Inline`) into a string with all formatting removed.
 ---@param element (Pandoc | Meta | Block | Inline)  some pandoc AST element
----@return string  a plain string representation of the given element
+---@return string # a plain string representation of the given element
 utils.stringify = function(element) end
 
 ---Converts an integer < 4000 to uppercase roman numeral
@@ -130,7 +130,7 @@ utils.stringify = function(element) end
 --- -- pandoc_birth_year == 'MMVI'
 --- ```
 ---@param n integer  positive integer below 4000
----@return string  a roman numeral
+---@return string # a roman numeral
 utils.to_roman_numeral = function(n) end
 
 ---Converts a `Table` into an old/simple table.
@@ -166,7 +166,7 @@ utils.to_simple_table = function(tbl) end
 --- end
 --- ```
 ---@param value any
----@return string  type of the given value
+---@return string # type of the given value
 utils.type = function(value) end
 
 ---Creates a [Version](lua://Version) object.

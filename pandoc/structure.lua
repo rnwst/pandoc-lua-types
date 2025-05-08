@@ -30,13 +30,13 @@ structure = {}
 --- ```
 ---@param blocks (Blocks | Block[] | Pandoc)              document blocks to process
 ---@param opts?  (WriterOptions | {base_level: integer})  options
----@return Blocks  processed blocks
+---@return Blocks # processed blocks
 structure.make_sections = function(blocks, opts) end
 
 ---Find level of header that starts slides (defined as the least header level
 ---that occurs before a non-header/non-hrule in the blocks).
 ---@param blocks (Blocks | Block[] | Pandoc)  document body
----@return integer  slide level
+---@return integer # slide level
 structure.slide_level = function(blocks) end
 
 ---Converts a [Pandoc](lua://Pandoc) document into a
@@ -68,7 +68,7 @@ structure.split_into_chunks = function(doc, opts) end
 ---Generates a table of contents for the given object.
 ---@param toc_source (Blocks | Block[] | Pandoc | ChunkedDoc)  document content to use for generating table of contents
 ---@param opts? WriterOptions  options
----@return BulletList  table of contents
+---@return BulletList # table of contents
 structure.table_of_contents = function(toc_source, opts) end
 
 return structure

@@ -12,7 +12,7 @@ system.os = ''
 ---Returns the number of picoseconds CPU time used by the current program. The
 ---precision of this result may vary in different versions and on different
 ---platforms.
----@return integer  CPU time in picoseconds
+---@return integer # CPU time in picoseconds
 system.cputime = function() end
 
 ---Retrieves the entire environment as a string-indexed table.
@@ -25,7 +25,7 @@ system.get_working_directory = function() end
 
 ---List the contents of a directory.
 ---@param directory string  path of the directory whose contents should be listed; defaults to `..`
----@return table<string, string>  a table of all entries in `directory`, except for the special entries `.` and `..`
+---@return table<string, string> # a table of all entries in `directory`, except for the special entries `.` and `..`
 system.list_directory = function(directory) end
 
 ---Create a new directory which is initially empty, or as near to empty as the
@@ -59,7 +59,7 @@ system.with_environment = function(environment, callback) end
 ---@param parent_dir? string         parent directory to create the directory in; if this parameter is omitted, the system's canonical temporary directory is used
 ---@param templ       string         directory name template
 ---@param callback    fun(string):T  function which takes the name of the temporary directory as its first argument
----@return T  the results of the call to callback
+---@return T # the results of the call to callback
 system.with_temporary_directory = function(parent_dir, templ, callback) end
 
 ---Run an action within a different directory. This function will change the
@@ -69,7 +69,7 @@ system.with_temporary_directory = function(parent_dir, templ, callback) end
 ---@generic T
 ---@param directory string  directory in which the given  allback should be executed
 ---@param callback fun():T  action to execute in the given directory
----@return T  the result of the call to `callback`
+---@return T # the result of the call to `callback`
 system.with_working_directory = function(directory, callback) end
 
 return system

@@ -39,7 +39,7 @@ zip.zip = function(filepaths, opts) end
 local ZipArchive = {}
 
 ---Returns the raw binary string representation of the archive.
----@return string  bytes of the archive
+---@return string # bytes of the archive
 function ZipArchive:bytestring() end
 
 ---Extract all files from this archive, creating directories as needed. Note
@@ -58,12 +58,12 @@ local ZipEntry = {}
 ---then that password is used to decrypt the contents. An error is thrown if
 ---decrypting fails.
 ---@param password? string  password for entry
----@return string  binary contents
+---@return string # binary contents
 function ZipEntry:contents(password) end
 
 ---Returns the target if the `Entry` represents a symbolic link, and `nil`
 ---otherwise. Always returns `nil` on Windows.
----@return (string | nil)  link target if entry represents a symbolic link
+---@return (string | nil) # link target if entry represents a symbolic link
 function ZipEntry:symlink() end
 
 

@@ -25,7 +25,7 @@ mediabag.empty = function() end
 --- local mt, contents = pandoc.mediabag.fetch(diagram_url)
 --- ```
 ---@param source string  path to a resource; either a local file path or URI
----@return (string | nil), (string | nil)  the entry's MIME type, or `nil` if the file was not found; contents of the file, or `nil` if the file was not found
+---@return (string | nil), (string | nil) # the entry's MIME type, or `nil` if the file was not found; contents of the file, or `nil` if the file was not found
 mediabag.fetch = function(source) end
 
 ---Fills the mediabag with the images in the given document. An image that
@@ -35,7 +35,7 @@ mediabag.fetch = function(source) end
 ---Images for which the mediabag already contains an item will not be processed
 ---again.
 ---@param doc Pandoc  document from which to fill the mediabag
----@return Pandoc  modified document
+---@return Pandoc # modified document
 mediabag.fill = function(doc) end
 
 ---Adds a new entry to pandoc’s media bag. Replaces any existing media bag entry
@@ -67,7 +67,7 @@ mediabag.insert = function(filepath, mimetype, contents) end
 ---   -- print(fp, mt, contents)
 --- end
 --- ```
----@return fun(): string, string, string  iterator which returns the filepath, MIME type, and content of a media bag item 
+---@return fun(): string, string, string # iterator which returns the filepath, MIME type, and content of a media bag item 
 mediabag.items = function() end
 
 ---Get a summary of the current media bag contents.
@@ -82,7 +82,7 @@ mediabag.items = function() end
 --- end
 --- print(sum)
 --- ```
----@return List<{path: string, type: string, length: integer}>  A [List](lua://List) of elements summarizing each entry in the media bag. The summary item contains the keys `path`, `type`, and `length`, giving the filepath, MIME type, and length of contents in bytes, respectively.
+---@return List<{path: string, type: string, length: integer}> # A [List](lua://List) of elements summarizing each entry in the media bag. The summary item contains the keys `path`, `type`, and `length`, giving the filepath, MIME type, and length of contents in bytes, respectively.
 mediabag.list = function() end
 
 ---Lookup a media item in the media bag, and return its MIME type and contents.
@@ -93,7 +93,7 @@ mediabag.list = function() end
 --- local mt, contents = pandoc.mediabag.lookup(filename)
 --- ```
 ---@param filepath string  name of the file to look up
----@return string, string  the entry's MIME type, or `nil` if the file was not found; contents of the file, or `nil` if the file was not found
+---@return string, string # the entry's MIME type, or `nil` if the file was not found; contents of the file, or `nil` if the file was not found
 mediabag.lookup = function(filepath) end
 
 ---Writes the contents of mediabag to the given target directory. If `fp` is

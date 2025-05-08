@@ -15,7 +15,7 @@ image = {}
 ---entry. It affects the calculation for vector image formats such as SVG.
 ---@param image string         binary image data
 ---@param opts? {dpi: number}  table with `dpi` entry, such as [WriterOptions](lua://WriterOptions)
----@return ({width: number, height: number, dpi_horz: number, dpi_vert: number} | string)  image size information or error message
+---@return ({width: number, height: number, dpi_horz: number, dpi_vert: number} | string) # image size information or error message
 image.size = function(image, opts) end
 
 ---Returns the format of an image as a lowercase string.
@@ -23,7 +23,7 @@ image.size = function(image, opts) end
 ---Formats recognized by pandoc include `png`, `gif`, `tiff`, `jpeg`, `pdf`,
 ---`svg`, `eps`, and `emf`.
 ---@param image string  binary image data
----@return (string | nil)  image format, or `nil` if the format cannot be determined
+---@return (string | nil) # image format, or `nil` if the format cannot be determined
 image.format = function(image) end
 
 return image

@@ -25,29 +25,29 @@ text = {}
 ---default code page on Windows is available through `CP0`.
 ---@param s         string    string to be converted
 ---@param encoding? Encoding  target encoding
----@return string  UTF-8 string
+---@return string # UTF-8 string
 text.fromencoding = function(s, encoding) end
 
 ---Returns the length of a UTF-8 string, i.e., the number of characters.
 ---@param s string  UTF-8 encoded string
----@return integer  length
+---@return integer # length
 text.len = function(s) end
 
 ---Returns a copy of a UTF-8 string, converted to lowercase.
 ---@param s string  UTF-8 string to convert to lowercase
----@return string  lowercase copy of `s`
+---@return string # lowercase copy of `s`
 text.lower = function(s) end
 
 ---Returns a copy of a UTF-8 string, with characters reversed.
 ---@param s string  UTF-8 string to revert
----@return string  reversed `s`
+---@return string # reversed `s`
 text.reverse = function(s) end
 
 ---Returns a substring of a UTF-8 string, using Lua’s string indexing rules.
 ---@param s  string   UTF-8 string
 ---@param i  integer  substring start position
 ---@param j? integer  substring end position
----@return string  text substring
+---@return string # text substring
 text.sub = function(s, i, j) end
 
 ---Converts a UTF-8 string to a different encoding. The encoding parameter
@@ -59,12 +59,12 @@ text.sub = function(s, i, j) end
 ---default code page on Windows is available through `CP0`.
 ---@param s    string    UTF-8 string
 ---@param enc? Encoding  target encoding
----@return string  re-encoded string
+---@return string # re-encoded string
 text.toencoding = function(s, enc) end
 
 ---Returns a copy of a UTF-8 string, converted to uppercase.
 ---@param s string  UTF-8 encoded string
----@return string  uppercase copy of `s`
+---@return string # uppercase copy of `s`
 text.upper = function(s) end
 
 return text
