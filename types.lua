@@ -646,7 +646,7 @@ function Inlines:walk(filter) end
 
 ---@alias Verbosity ('INFO' | 'WARNING' | 'ERROR')
 
----@class Doc Reflowable plain-text document. A Doc value can be rendered and reflown to fit a given column width.
+---@class Doc: userdata  Reflowable plain-text document. A Doc value can be rendered and reflown to fit a given column width.
 ---@operator concat(Doc): Doc 
 ---@operator add(Doc): Doc
 ---@operator div(Doc): Doc
@@ -661,7 +661,7 @@ function Inlines:walk(filter) end
 ---@field headers Blocks           table header row
 ---@field rows    Blocks           table rows
 
----@class Template opaque type holding a compiled template
+---@class Template: userdata  opaque type holding a compiled template
 
 ---@class Version: {[integer]: integer}
 Version = {}
