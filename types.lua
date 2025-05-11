@@ -40,13 +40,33 @@ function Walkable:walk(filter) end
 
 -- Meta --------------------------------------------------------------------------------------------
 
--- TBD - don't forget about `clone` and `walk` methods!
----@alias Meta {[string]: any}
+---@class (exact) Meta: Walkable
+---@field [string] MetaValue
+
+---@alias MetaValue
+---| MetaBool
+---| MetaString
+---| MetaInlines
+---| MetaBlocks
+---| MetaList
+---| MetaMap
+
+---@alias MetaBool boolean
+
+---@alias MetaString (string | number)
+
+---@alias MetaInlines Inlines
+
+---@alias MetaBlocks Blocks
+
+---@alias MetaList {[integer]: MetaValue}
+
+---@alias MetaMap {[string]: MetaValue}
 
 
 -- List --------------------------------------------------------------------------------------------
 
----@class List<T>: {[integer]: T} A Pandoc List
+---@class List<T>: {[integer]: T}  A Pandoc List
 ---@operator concat(List): List
 ---@overload fun(tbl: table): List
 pandoc.List = {}

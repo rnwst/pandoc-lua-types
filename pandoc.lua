@@ -125,12 +125,12 @@ pandoc.writer = {
 
 ---Creates a new Pandoc document.
 ---@param blocks (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)
----@param meta? Meta
+---@param meta? (Meta | {[string]: MetaValue})
 ---@return Pandoc
 pandoc.Pandoc = function(blocks, meta) end
 
----Creates a Meta table containing document metadata.
----@param meta {[string]: any} document metadata
+---Creates a [Meta](lua://Meta) table containing document metadata.
+---@param meta (Meta | {[string]: MetaValue})  document metadata
 ---@return Meta
 pandoc.Meta = function(meta) end
 
@@ -138,7 +138,7 @@ pandoc.MetaBlocks = pandoc.Blocks
 
 ---Converts the argument into a boolean. This function is pretty pointless.
 ---@param arg any
----@return boolean
+---@return MetaBool
 pandoc.MetaBool = function(arg) end
 
 pandoc.MetaInlines = pandoc.Inlines
@@ -152,8 +152,8 @@ pandoc.MetaList = pandoc.List
 pandoc.MetaMap = function(tbl) end
 
 ---Converts the argument into a string, but acts as the identity function if the argument is a boolean. This function exists only for completeness and is pretty pointless.
----@param arg (string | integer | boolean)
----@return string | boolean
+---@param arg (string | number | boolean)
+---@return MetaString
 pandoc.MetaString = function(arg) end
 
 ---Creates a BlockQuote block-level element.
