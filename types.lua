@@ -3,13 +3,39 @@
 -- That being said, it seems to catch at least 90% of my errors! 
 ---@meta
 
+-- `clone` method ----------------------------------------------------------------------------------
+
+---@class Cloneable
+Cloneable = {}
+
+---Creates a clone of the element.
+---@generic T
+---@param self T
+---@return T
+function Cloneable:clone() end
+
+
+-- `walk` method -----------------------------------------------------------------------------------
+
+---@class Walkable: Cloneable
+Walkable = {}
+
+---Applies a Lua filter to the element. The order in which elements are
+---traversed can be controlled by setting the `traverse` field of the filter.
+---Returns a (deep) copy on which the filter has been applied: the original
+---object is left untouched.
+---@generic T
+---@param self T
+---@param filter Filter
+---@return T
+function Walkable:walk(filter) end
+
 
 -- Pandoc ------------------------------------------------------------------------------------------
 
----@class (exact) Pandoc
+---@class (exact) Pandoc: Walkable
 ---@field blocks (Blocks | Block[]) document content
 ---@field meta Meta document meta information
----@field walk fun(filter: Filter): Pandoc
 
 
 -- Meta --------------------------------------------------------------------------------------------
@@ -32,7 +58,7 @@ pandoc.List.__call = pandoc.List.new
 ---This is useful when passing an empty table as a MetaValue to ensure it is
 ---treated as a List. It is also useful for making List methods such as `find`,
 ---`filter`, `includes`, `insert`, `map`, `remove`, and `sort` available on an
----existing array, as well as the metamethods `__concat` and `__eq`, which allow
+---existing list, as well as the metamethods `__concat` and `__eq`, which allow
 ---for concatenation and to test for equality of Lists.
 ---@param tbl table
 ---@return List
@@ -184,7 +210,7 @@ end
 
 ---Applies a Lua filter to the Blocks List. Just as for
 ---full-document filters, the order in which elements are
----traversed can be controlled by setting the 'traverse' field
+---traversed can be controlled by setting the `traverse` field
 ---of the filter. The filter is applied to all List items
 ---and to the List itself. Returns a (deep) copy on which
 ---the filter has been  applied: the original List is left
@@ -193,17 +219,17 @@ end
 ---@return Blocks
 function Blocks:walk(filter) end
 
----@class (exact) BlockQuote
+---@class (exact) BlockQuote: Walkable
 ---@field content (Blocks | Block[])  block content
 ---@field tag 'BlockQuote'
 ---@field t 'BlockQuote'
 
----@class (exact) BulletList
+---@class (exact) BulletList: Walkable
 ---@field content (List<(Blocks | Block[])> | (Blocks | Block[])[])  List items, List of a List of block-level elements
 ---@field tag 'BulletList'
 ---@field t 'BulletList'
 
----@class (exact) CodeBlock
+---@class (exact) CodeBlock: Cloneable
 ---@field text string code string
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
@@ -212,12 +238,12 @@ function Blocks:walk(filter) end
 ---@field tag 'CodeBlock'
 ---@field t 'CodeBlock'
 
----@class (exact) DefinitionList
+---@class (exact) DefinitionList: Walkable
 ---@field content (List<[(Inlines | Inline[]), (Blocks | Block[])]> | [(Inlines | Inline[]), (Blocks | Block[])][]) a List of tuples, where a tuple consists of a List of inline-level elements, and List of a List of block-level elements 
 ---@field tag 'DefinitionList'
 ---@field t 'DefinitionList'
 
----@class (exact) Div
+---@class (exact) Div: Walkable
 ---@field content (Blocks | Block[]) block content
 ---@field attr Attr element attributes
 ---@field identifier string alias for `attr.identifier`
@@ -226,7 +252,7 @@ function Blocks:walk(filter) end
 ---@field tag 'Div'
 ---@field t 'Div'
 
----@class (exact) Figure
+---@class (exact) Figure: Walkable
 ---@field content (Blocks | Block[])
 ---@field caption Caption
 ---@field attr Attr
@@ -236,7 +262,7 @@ function Blocks:walk(filter) end
 ---@field tag 'Figure'
 ---@field t 'Figure'
 
----@class (exact) Header
+---@class (exact) Header: Walkable
 ---@field level integer header level
 ---@field content (Inlines | Inline[]) inline content
 ---@field attr Attr element attributes
@@ -246,39 +272,39 @@ function Blocks:walk(filter) end
 ---@field tag 'Header'
 ---@field t 'Header'
 
----@class (exact) HorizontalRule
+---@class (exact) HorizontalRule: Cloneable
 ---@field tag 'HorizontalRule'
 ---@field t 'HorizontalRule'
 
----@class (exact) LineBlock
+---@class (exact) LineBlock: Walkable
 ---@field content (Inlines | Inline[])  List of lines, i.e. List of inline elements
 ---@field tag 'LineBlock'
 ---@field t 'LineBlock'
 
----@class (exact) OrderedList
+---@class (exact) OrderedList: Walkable
 ---@field content        (List<(Blocks | Block[])> | (Blocks | Block[])[])  List items, List of a List of block-level elements
 ---@field listAttributes ListAttributes                                     List parameters
 ---@field start          integer                                            alias for `listAttributes.start`
 ---@field style          ListNumberStyle                                    alias for `listAttributes.style`
 ---@field delimiter      ListNumberDelim                                    alias for `listAttributes.delimiter`
 
----@class (exact) Para
+---@class (exact) Para: Walkable
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Para'
 ---@field t 'Para'
 
----@class (exact) Plain
+---@class (exact) Plain: Walkable
 ---@field content (Inlines | Inline[])
 ---@field tag 'Plain'
 ---@field t 'Plain'
 
----@class (exact) RawBlock
+---@class (exact) RawBlock: Cloneable
 ---@field format string format of content
 ---@field text string raw content
 ---@field tag 'RawBlock'
 ---@field t 'RawBlock'
 
----@class (exact) Table
+---@class (exact) Table: Walkable
 ---@field attr Attr table attributes
 ---@field caption Caption table caption
 ---@field colspecs ColSpec column specifications, i.e. alignments and widths
@@ -340,13 +366,13 @@ end
 ---@return Inlines
 function Inlines:walk(filter) end
 
----@class (exact) Cite
+---@class (exact) Cite: Walkable
 ---@field content (Inlines | Inline[])             citation content
 ---@field citations (List<Citation> | Citation[])  List of citations
 ---@field tag 'Cite'
 ---@field t 'Cite'
 
----@class (exact) Code
+---@class (exact) Code: Cloneable
 ---@field text string code string
 ---@field attr Attr attributes
 ---@field identifier string alias for `attr.identifier`
@@ -355,12 +381,12 @@ function Inlines:walk(filter) end
 ---@field tag 'Code'
 ---@field t 'Code'
 
----@class (exact) Emph
+---@class (exact) Emph: Walkable
 ---@field content (Inlines | Inline[])
 ---@field tag 'Emph'
 ---@field t 'Emph'
 
----@class (exact) Image
+---@class (exact) Image: Cloneable
 ---@field caption (Inlines | Inline[]) text used to describe the image
 ---@field src string path to the image file
 ---@field title string brief image description
@@ -371,11 +397,11 @@ function Inlines:walk(filter) end
 ---@field tag 'Image'
 ---@field t 'Image'
 
----@class (exact) LineBreak
+---@class (exact) LineBreak: Cloneable
 ---@field tag 'LineBreak'
 ---@field t 'LineBreak'
 
----@class (exact) Link
+---@class (exact) Link: Walkable
 ---@field attr Attr attributes
 ---@field content (Inlines | Inline[]) text for this link
 ---@field target string the link target
@@ -386,43 +412,43 @@ function Inlines:walk(filter) end
 ---@field tag 'Link'
 ---@field t 'Link'
 
----@class (exact) Math
+---@class (exact) Math: Cloneable
 ---@field mathtype ('InlineMath' | 'DisplayMath')
 ---@field text string
 ---@field tag 'Math'
 ---@field t 'Math'
 
----@class (exact) Note Footnote or endnote. A Note is the only inline element which can contain Block content. Values of this type can be created with the `pandoc.Note` constructor.
+---@class (exact) Note: Walkable  Footnote or endnote. A Note is the only inline element which can contain Block content. Values of this type can be created with the `pandoc.Note` constructor.
 ---@field content (Blocks | Block[]) note content
 ---@field tag 'Note'
 ---@field t 'Note'
 
----@class (exact) Quoted
+---@class (exact) Quoted: Walkable
 ---@field quotetype ('SingleQuote' | 'DoubleQuote')
 ---@field content (Inlines | Inline[])
 ---@field tag 'Quoted'
 ---@field t 'Quoted'
 
----@class (exact) RawInline
+---@class (exact) RawInline: Cloneable
 ---@field format string the format of the content
 ---@field text string raw content
 ---@field tag 'RawInline'
 ---@field t 'RawInline'
 
----@class (exact) SmallCaps
+---@class (exact) SmallCaps: Walkable
 ---@field content (Inlines | Inline[]) small caps content
 ---@field tag 'SmallCaps'
 ---@field t 'SmallCaps'
 
----@class (exact) SoftBreak
+---@class (exact) SoftBreak: Cloneable
 ---@filed tag 'SoftBreak'
 ---@field t 'SoftBreak'
 
----@class (exact) Space
+---@class (exact) Space: Cloneable
 ---@field tag 'Space'
 ---@field t 'Space'
 
----@class (exact) Span
+---@class (exact) Span: Walkable
 ---@field attr Attr attributes
 ---@field content (Inlines | Inline[]) wrapped content
 ---@field identifier string alias for `attr.identifier`
@@ -431,31 +457,31 @@ function Inlines:walk(filter) end
 ---@field tag 'Span'
 ---@field t 'Span'
 
----@class (exact) Str
+---@class (exact) Str: Cloneable
 ---@field tag 'Str'
 ---@field text string Content
 
----@class (exact) Strikeout
+---@class (exact) Strikeout: Walkable
 ---@field content (Inlines | Inline[]) struck out content
 ---@field tag 'Strikeout'
 ---@field t 'Strikeout'
 
----@class (exact) Strong
+---@class (exact) Strong: Walkable
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Strong'
 ---@field t 'Strong'
 
----@class (exact) Subscript
+---@class (exact) Subscript: Walkable
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Subscript'
 ---@field t 'Subscript'
 
----@class (exact) Superscript
+---@class (exact) Superscript: Walkable
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Superscript'
 ---@field t 'Superscript'
 
----@class (exact) Underline
+---@class (exact) Underline: Walkable
 ---@field content (Inlines | Inline[]) inline content
 ---@field tag 'Underline'
 ---@field t 'Underline'
@@ -465,18 +491,18 @@ function Inlines:walk(filter) end
 
 ---@alias Alignment 'AlignDefault' | 'AlignLeft' | 'AlignRight' | 'AlignCenter'
 
----@class (exact) Attr
+---@class (exact) Attr: Cloneable
 ---@field identifier string element identifier
 ---@field classes (List<string> | string[]) element classes
 ---@field attributes Attributes element attributes
 
 ---@alias Attributes table<string, string> collection of key/value pairs
 
----@class (exact) Caption The caption of a table, with an optional short caption.
+---@class (exact) Caption: Cloneable  The caption of a table, with an optional short caption.
 ---@field long (Blocks | Block[])
 ---@field short (Inlines | Inline[])
 
----@class (exact) Cell A table cell.
+---@class (exact) Cell: Cloneable  A table cell.
 ---@field alignment Alignment individual cell alignment
 ---@field contents (Blocks | Block[]) cell contents
 ---@field col_span integer number of columns spanned by the cell; the width of the cell in columns
@@ -485,7 +511,7 @@ function Inlines:walk(filter) end
 ---@field classes (List<string> | string[]) alias for `attr.classes`
 ---@field attributes Attributes alias for `attr.attributes`
 
----@class (exact) Citation
+---@class (exact) Citation: Cloneable
 ---@field id string citation identifier, e.g. a bibtex key
 ---@field mode CitationMode citation mode
 ---@field prefix (Inlines | Inline[]) citation prefix
@@ -497,7 +523,7 @@ function Inlines:walk(filter) end
 
 ---@alias ColSpec [Alignment, number]
 
----@class (exact) ListAttributes
+---@class (exact) ListAttributes: Cloneable
 ---@field start integer number of the first list item
 ---@field style ListNumberStyle style used for list numbers
 ---@field delimiter ListNumberDelim delimiter of list numbers
@@ -506,24 +532,24 @@ function Inlines:walk(filter) end
 
 ---@alias ListNumberDelim ('DefaultDelim' | 'Period' | 'OneParen' | 'TwoParens')
 
----@class (exact) Row A table row.
+---@class (exact) Row: Cloneable  A table row.
 ---@field attr  Attr                   element attributes
 ---@field cells (List<Cell> | Cell[])  List of table cells
 
----@class (exact) TableBody A body of a table, with an intermediate head and the specified number of row header columns.
+---@class (exact) TableBody: Cloneable  A body of a table, with an intermediate head and the specified number of row header columns.
 ---@field attr             Attr                  table body attributes
 ---@field body             (List<Cell> | Row[])  table body rows
 ---@field head             (List<Row> | Row[])   intermediate head
 ---@field row_head_columns number                Number of columns taken up by the row head of each row of a TableBody. The row body takes up the remaining columns.
 
----@class (exact) TableFoot The foot of a table.
+---@class (exact) TableFoot: Cloneable  The foot of a table.
 ---@field attr       Attr                       table foot attributes
 ---@field rows       (List<Row> | Row[])        List of rows
 ---@field identifier string                     alias for `attr.identifier`
 ---@field classes    (List<string> | string[])  alias for `attr.classes`
 ---@field attributes Attributes                 alias for `attr.attributes`
 
----@class (exact) TableHead The head of a table.
+---@class (exact) TableHead: Cloneable  The head of a table.
 ---@field attr       Attr                       table head attributes
 ---@field rows       (List<Row> | Row[])        List of rows
 ---@field identifier string                     alias for `attr.identifier`
