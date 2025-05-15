@@ -752,7 +752,7 @@ Version.must_be_at_least = function(actual, expected, error_message) end
 
 ---@class (exact) FilterTable
 ---@field traverse?       ('topdown' | 'typewise')
----@field Pandoc?         fun(blocks: Blocks, meta: Meta):      Pandoc | nil
+---@field Pandoc?         fun(doc: Pandoc):                     Pandoc | nil
 ---@field Meta?           fun(meta: Meta):                      Meta   | nil
 ---@field Blocks?         fun(blocks: Blocks):                  Blocks  | Block[]  | nil, false?
 ---@field Inlines?        fun(inlines: Inlines):                Inlines | Inline[] | nil, false?
