@@ -143,9 +143,16 @@ function pandoc.List:includes(needle, init) end
 ---This function is identical to `table.insert`.
 ---@generic T
 ---@param self  List<T>
----@param pos?  integer  index of new value; defaults to length of the List + 1
+---@param pos   integer  index of new value; defaults to length of the List + 1
 ---@param value T        value to insert into the List
 function pandoc.List:insert(pos, value) end
+
+---Append element `value` to the end of the List.
+---This function is identical to `table.insert`.
+---@generic T
+---@param self  List<T>
+---@param value T        value to insert into the List
+function pandoc.List:insert(value) end
 
 ---Create an iterator over the List. The resulting function returns the next value each time it is called.
 ---
