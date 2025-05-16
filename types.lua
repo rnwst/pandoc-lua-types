@@ -171,7 +171,7 @@ function pandoc.List:iter(step) end
 ---Returns a copy of the current List by applying the given function to all elements.
 ---@generic T
 ---@param self List<T>
----@param fn fun(T): T  function which is applied to all List items
+---@param fn fun(item: T): any  function which is applied to all List items
 ---@return List<T>
 function pandoc.List:map(fn) end
 
