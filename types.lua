@@ -687,15 +687,15 @@ function Inlines:walk(filter) end
 ---| { method: ('plain' | 'mathjax' | 'mathml' | 'webtex' | 'katex' | 'gladtex'), url: string }
 
 ---@class (exact) CommonState
----@field input_files     (List<string> | string[])          list of input files from command line
----@field output_file     (string | nil)                     output file from command line
----@field log             (List<LogMessage> | LogMessage[])  list of log messages in reverse order
----@field request_headers {[string]: string}                 headers to add for HTTP requests; table with header names as keys and header contents as values
----@field resource_path   (List<string> | string[])          path to search for resources like included images
----@field source_url      (string | nil)                     absolute URL or directory of first source file
----@field user_data_dir   (string | nil)                     directory to search for data files
----@field trace           boolean                            whether tracing messages are issued
----@field verbosity       Verbosity                          verbosity level
+---@field input_files     List<string>        list of input files from command line
+---@field output_file     (string | nil)      output file from command line
+---@field log             List<LogMessage>    list of log messages in reverse order
+---@field request_headers {[string]: string}  headers to add for HTTP requests; table with header names as keys and header contents as values
+---@field resource_path   List<string>        path to search for resources like included images
+---@field source_url      (string | nil)      absolute URL or directory of first source file
+---@field user_data_dir   (string | nil)      directory to search for data files
+---@field trace           boolean             whether tracing messages are issued
+---@field verbosity       Verbosity           verbosity level
 
 ---@alias Verbosity ('INFO' | 'WARNING' | 'ERROR')
 
