@@ -462,9 +462,9 @@ pandoc.walk_block = function(block, filter) end
 pandoc.walk_inline = function(inline, filter) end
 
 ---Parses the given string into a Pandoc document.
----@param markup string The markup to be parsed.
----@param format? string | {format: string, extensions: (Extension[] | table<Extension, (boolean | 'enable' | 'disable')>)} The format parameter defines the format flavor that will be parsed. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
----@param reader_options? ReaderOptions Options passed to the reader; may be a ReaderOptions object or a table with a subset of the keys and values of a ReaderOptions object; defaults to the default values documented in the manual.
+---@param markup          (string | Sources)  The markup to be parsed.
+---@param format?         string | {format: string, extensions: (Extension[] | table<Extension, (boolean | 'enable' | 'disable')>)}  The format parameter defines the format flavor that will be parsed. This can be either a string, using + and - to enable and disable extensions, or a table with fields format (string) and extensions (table). The extensions table can be a list of all enabled extensions, or a table with extensions as keys and their activation status as values (true or 'enable' to enable an extension, false or 'disable' to disable it).
+---@param reader_options? ReaderOptions       Options passed to the reader; may be a ReaderOptions object or a table with a subset of the keys and values of a ReaderOptions object; defaults to the default values documented in the manual.
 ---@return Pandoc
 pandoc.read = function(markup, format, reader_options) end
 

@@ -714,7 +714,7 @@ function Inlines:walk(filter) end
 ---@field headers Blocks           table header row
 ---@field rows    Blocks           table rows
 
----@class Template: userdata  opaque type holding a compiled template
+---@class Template: userdata  Opaque type holding a compiled template
 
 ---@class Version: {[integer]: integer}
 Version = {}
@@ -751,6 +751,7 @@ Version.must_be_at_least = function(actual, expected, error_message) end
 ---@field path     string
 ---@field level    integer
 
+---@class Sources: userdata  Opaque type used in custom Readers
 
 -- Filters -----------------------------------------------------------------------------------------
 
