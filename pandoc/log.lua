@@ -1,6 +1,6 @@
--- Access to pandoc's logging system.
 ---@meta
 
+---Access to pandoc's logging system.
 log = {}
 
 ---Reports a `ScriptingInfo` message to pandoc's logging system.

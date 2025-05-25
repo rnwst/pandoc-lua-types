@@ -1,8 +1,8 @@
--- The `pandoc.mediabag` module allows accessing pandoc’s media storage. The
--- “media bag” is used when pandoc is called with the `--extract-media` or (for
--- HTML only) `--embed-resources` option.
 ---@meta
 
+---The `pandoc.mediabag` module allows accessing pandoc’s media storage. The
+---“media bag” is used when pandoc is called with the `--extract-media` or (for
+---HTML only) `--embed-resources` option.
 mediabag = {}
 
 ---Removes a single entry from the media bag.

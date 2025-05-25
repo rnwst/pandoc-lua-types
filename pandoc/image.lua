@@ -1,6 +1,6 @@
--- Basic image querying functions.
 ---@meta
 
+---Basic image querying functions.
 image = {}
 
 ---Returns a table containing the size and resolution of an image; throws an

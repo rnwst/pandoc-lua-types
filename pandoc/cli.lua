@@ -1,6 +1,6 @@
--- Command line options and argument passing.
 ---@meta
 
+---Command line options and argument passing.
 cli = {}
 
 ---@type {[string]: string}

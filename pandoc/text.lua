@@ -1,16 +1,16 @@
--- UTF-8 aware text manipulation functions, implemented in Haskell.
--- 
--- The text module can also be loaded under the name `text`, although this is discouraged and deprecated.
--- 
--- ```lua
--- -- uppercase all regular text in a document:
--- function Str (s)
---    s.text = pandoc.text.upper(s.text)
---    return s
--- end
--- ```
 ---@meta
 
+---UTF-8 aware text manipulation functions, implemented in Haskell.
+---
+---The text module can also be loaded under the name `text`, although this is discouraged and deprecated.
+---
+--- ```lua
+--- -- uppercase all regular text in a document:
+--- function Str (s)
+---    s.text = pandoc.text.upper(s.text)
+---    return s
+--- end
+--- ```
 text = {}
 
 ---@alias Encoding ('UTF-8' | 'UTF-16BE' | 'UTF-16LE' | 'UTF-32BE' | 'UTF-32LE' | 'CP0')

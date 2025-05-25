@@ -1,6 +1,6 @@
--- Handle pandoc templates.
 ---@meta
 
+---Handle pandoc templates.
 template = {}
 
 ---@alias TemplateContext table<string, (Doc | string | boolean | TemplateContext)>

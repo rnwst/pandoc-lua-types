@@ -1,9 +1,13 @@
 ---@meta
 
----@class Path  Path to file
----@field separator             string  the character that separates directories
----@field search_path_separator string  the character that is used to separate the entries in the `PATH` environment variable
+---Module for file path manipulations.
 path = {}
+
+---@type ('/' | '\\')  the character that separates directories
+path.separator = '' ---@diagnostic disable-line: assign-type-mismatch
+
+---@type (':' | ';')  the character that is used to separate the entries in the `PATH` environment variable
+path.search_path_separator = '' ---@diagnostic disable-line: assign-type-mismatch
 
 ---Gets the directory name, i.e. removes the last directory separator and
 ---everything after from the given path.

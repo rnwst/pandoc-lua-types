@@ -1,7 +1,7 @@
--- Access to the higher-level document structure, including hierarchical
--- sections and the table of contents.
 ---@meta
 
+---Access to the higher-level document structure, including hierarchical
+---sections and the table of contents.
 structure = {}
 
 ---Puts [Blocks](lua://Blocks) into a hierarchical structure: a list of

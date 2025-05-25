@@ -1,6 +1,6 @@
--- This module exposes internal pandoc functions and utility functions.
 ---@meta
 
+---This module exposes internal pandoc functions and utility functions.
 utils = {}
 
 ---Squash a list of blocks into a list of inlines.

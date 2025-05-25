@@ -1,6 +1,6 @@
--- Information about the formats supported by pandoc.
 ---@meta
 
+---Information about the formats supported by pandoc.
 format = {}
 
 ---Returns the list of all valid extensions for a format. No distinction is

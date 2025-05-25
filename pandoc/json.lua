@@ -1,6 +1,6 @@
--- JSON module to work with JSON; based on the Aeson Haskell package.
 ---@meta
 
+---JSON module to work with JSON; based on the Aeson Haskell package.
 json = {}
 
 ---@type lightuserdata  value used to represent the null JSON value

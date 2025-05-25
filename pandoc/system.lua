@@ -1,13 +1,13 @@
--- Access to the system’s information and file functionality.
 ---@meta
 
+---Access to the system’s information and file functionality.
 system = {}
 
 ---@type ('x86_64' | 'arm64')
-system.arch = ''
+system.arch = '' ---@diagnostic disable-line: assign-type-mismatch
 
 ---@type ('freebsd' | 'linux' | 'linux-android' | 'mingw32' | 'netbsd' | 'openbsd')
-system.os = ''
+system.os = '' ---@diagnostic disable-line: assign-type-mismatch
 
 ---Returns the number of picoseconds CPU time used by the current program. The
 ---precision of this result may vary in different versions and on different

@@ -1,6 +1,7 @@
--- Scaffolding for custom writers. See https://pandoc.org/custom-writers.html#reducing-boilerplate-with-pandoc.scaffolding.writer.
 ---@meta
 
+---Scaffolding for custom writers.
+---See https://pandoc.org/custom-writers.html#reducing-boilerplate-with-pandoc.scaffolding.writer.
 scaffolding = {}
 
 ---@overload fun(doc: Pandoc, opts: WriterOptions): string

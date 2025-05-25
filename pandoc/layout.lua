@@ -1,6 +1,6 @@
--- Plain-text document layouting. Useful for writing custom writers.
 ---@meta
 
+---Plain-text document layouting. Useful for writing custom writers.
 layout = {}
 
 ---@type Doc  Inserts a blank line unless one already exists.
