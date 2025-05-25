@@ -1,7 +1,7 @@
 -- Definitions for the pandoc module.
 ---@meta
 
-
+---The pandoc module.
 pandoc = {}
 
 pandoc.readers = {
