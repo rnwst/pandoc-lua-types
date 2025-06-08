@@ -565,7 +565,7 @@ function Inlines:walk(filter) end
 
 ---@class (exact) TableBody: Cloneable  A body of a table, with an intermediate head and the specified number of row header columns.
 ---@field attr             Attr                  table body attributes
----@field body             (List<Cell> | Row[])  table body rows
+---@field body             (List<Row> | Row[])   table body rows
 ---@field head             (List<Row> | Row[])   intermediate head
 ---@field row_head_columns number                Number of columns taken up by the row head of each row of a TableBody. The row body takes up the remaining columns.
 
