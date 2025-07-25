@@ -410,8 +410,8 @@ pandoc.Row = function(cells, attr) end
 pandoc.TableFoot = function(rows, attr) end
 
 ---Creates a table head.
----@param rows Row[] list of table rows
----@param attr Attr table head attributes
+---@param rows? Row[] list of table rows
+---@param attr? Attr table head attributes
 ---@return TableHead
 pandoc.TableHead = function(rows, attr) end
 
