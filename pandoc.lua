@@ -448,15 +448,15 @@ pandoc.pipe = function(command, args, input) end
 
 ---Apply a filter inside a block-level element, walking its contents. Returns a (deep) copy on which the filter has been applied: the original element is left untouched.
 ---@generic T: Block
----@param block  `T`     the block element
----@param filter Filter  Lua filter to be applied within the block element
+---@param block  `T`          the block element
+---@param filter FilterTable  Lua filter to be applied within the block element
 ---@return T
 pandoc.walk_block = function(block, filter) end
 
 ---Apply a filter inside an inline-level element, walking its contents. Returns a (deep) copy on which the filter has been applied: the original element is left untouched.
 ---@generic T: Inline
----@param inline `T`     the block element
----@param filter Filter  Lua filter to be applied within the block element
+---@param inline `T`          the block element
+---@param filter FilterTable  Lua filter to be applied within the block element
 ---@return T
 pandoc.walk_inline = function(inline, filter) end
 

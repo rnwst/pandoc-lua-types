@@ -26,7 +26,7 @@ Walkable = {}
 ---object is left untouched.
 ---@generic T
 ---@param self T
----@param filter Filter
+---@param filter FilterTable
 ---@return T
 function Walkable:walk(filter) end
 
@@ -242,7 +242,7 @@ end
 ---and to the List itself. Returns a (deep) copy on which
 ---the filter has been  applied: the original List is left
 ---untouched.
----@param filter Filter
+---@param filter FilterTable
 ---@return Blocks
 function Blocks:walk(filter) end
 
@@ -389,7 +389,7 @@ end
 ---and to the List itself. Returns a (deep) copy on which
 ---the filter has been  applied: the original List is left
 ---untouched.
----@param filter Filter
+---@param filter FilterTable
 ---@return Inlines
 function Inlines:walk(filter) end
 
