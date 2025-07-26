@@ -117,7 +117,7 @@ utils.run_lua_filter = function(doc, filter, env) end
 utils.sha1 = function(input) end
 
 ---Converts the given element (`Pandoc`, `Meta`, `Block`, or `Inline`) into a string with all formatting removed.
----@param element (Pandoc | Meta | Block | Inline)  some pandoc AST element
+---@param element (Pandoc | Meta | Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)  some pandoc AST element, a list of elements, a string, or a list of strings
 ---@return string # a plain string representation of the given element
 utils.stringify = function(element) end
 
