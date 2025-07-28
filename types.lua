@@ -413,7 +413,7 @@ function Inlines:walk(filter) end
 ---@field tag 'Emph'
 ---@field t 'Emph'
 
----@class (exact) Image: Cloneable
+---@class (exact) Image: Walkable
 ---@field caption (Inlines | Inline[]) text used to describe the image
 ---@field src string path to the image file
 ---@field title string brief image description
