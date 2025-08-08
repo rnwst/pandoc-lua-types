@@ -363,6 +363,12 @@ pandoc.Inlines = function(inline_like_elements) end
 ---@return Attr
 pandoc.Attr = function(identifier, classes, attributes) end
 
+---Creates a new [Caption](lua://Caption) object.
+---@param long?  (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string)  full caption
+---@param short? (Inlines | Inline[] | Inline | string[] | string)                     short summary caption
+---@return Caption
+pandoc.Caption = function(long, short) end
+
 ---Creates a new table cell.
 ---@param blocks (Blocks | Block[] | Inlines | Inline[] | Inline | string[] | string) cell contents
 ---@param align? Alignment text alignment, defaults to 'AlignDefault'
