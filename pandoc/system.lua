@@ -55,11 +55,18 @@ system.with_environment = function(environment, callback) end
 
 ---Create and use a temporary directory inside the given directory. The
 ---directory is deleted after the callback returns.
----@param parent_dir? string           parent directory to create the directory in; if this parameter is omitted, the system's canonical temporary directory is used
+---@param parent_dir string           parent directory to create the directory in; if this parameter is omitted, the system's canonical temporary directory is used
+---@param templ      string           directory name template
+---@param callback   fun(string):...  function which takes the name of the temporary directory as its first argument
+---@return ... # the results of the call to callback
+system.with_temporary_directory = function(parent_dir, templ, callback) end
+
+---Create and use a temporary directory inside the given directory. The
+---directory is deleted after the callback returns.
 ---@param templ       string           directory name template
 ---@param callback    fun(string):...  function which takes the name of the temporary directory as its first argument
 ---@return ... # the results of the call to callback
-system.with_temporary_directory = function(parent_dir, templ, callback) end
+system.with_temporary_directory = function(templ, callback) end
 
 ---Run an action within a different directory. This function will change the
 ---working directory to `directory`, execute `callback`, then switch back to
