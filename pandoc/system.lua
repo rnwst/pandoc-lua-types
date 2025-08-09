@@ -25,7 +25,7 @@ system.get_working_directory = function() end
 
 ---List the contents of a directory.
 ---@param directory string  path of the directory whose contents should be listed; defaults to `..`
----@return table<string, string> # a table of all entries in `directory`, except for the special entries `.` and `..`
+---@return string[] # a table of all entries in `directory`, except for the special entries `.` and `..`
 system.list_directory = function(directory) end
 
 ---Create a new directory which is initially empty, or as near to empty as the
