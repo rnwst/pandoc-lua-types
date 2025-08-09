@@ -448,8 +448,9 @@ pandoc.WriterOptions = function(opts) end
 
 ---Runs command with arguments, passing it some input, and returns the output.
 ---@param command string    program to run; the executable will be resolved using default system methods
----@param args    string[]  List of arguments to pass to the program
----@param input any
+---@param args    string[]  list of arguments to pass to the program
+---@param input   string    data which is piped into the program via stdin
+---@return string # data printed to stdout
 pandoc.pipe = function(command, args, input) end
 
 ---Apply a filter inside a block-level element, walking its contents. Returns a (deep) copy on which the filter has been applied: the original element is left untouched.
