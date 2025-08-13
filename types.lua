@@ -526,8 +526,8 @@ function Inlines:walk(filter) end
 ---@alias Attributes table<string, string> collection of key/value pairs
 
 ---@class (exact) Caption: Cloneable  The caption of a table, with an optional short caption.
----@field long (Blocks | Block[])
----@field short (Inlines | Inline[])
+---@field long   (Blocks | Block[])
+---@field short? (Inlines | Inline[])
 
 ---@class (exact) Cell: Cloneable  A table cell.
 ---@field alignment Alignment individual cell alignment
