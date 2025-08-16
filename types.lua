@@ -179,7 +179,7 @@ function pandoc.List:map(fn) end
 ---This function is identical to `table.remove`.
 ---@generic T
 ---@param self List<T>
----@param pos integer  position of the List value to be removed; defaults to the index of the last element
+---@param pos? integer  position of the List value to be removed; defaults to the index of the last element
 ---@return List<T>
 function pandoc.List:remove(pos) end
 
