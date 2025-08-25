@@ -548,7 +548,7 @@ function Inlines:walk(filter) end
 
 ---@alias CitationMode ('AuthorInText' | 'SuppressAuthor' | 'NormalCitation')
 
----@alias ColSpec [Alignment, number]
+---@alias ColSpec [Alignment, (number | 'ColWidthDefault')]
 
 ---@class (exact) ListAttributes: Cloneable
 ---@field start integer number of the first list item
