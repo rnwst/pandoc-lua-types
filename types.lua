@@ -127,7 +127,7 @@ function pandoc.List:find_if(pred, init) end
 ---Returns a new List containing all items satisfying a given condition.
 ---@generic T
 ---@param self List<T>
----@param pred fun(T): boolean  the predicate function
+---@param pred fun(item: T): boolean  the predicate function
 ---@return List<T>
 function pandoc.List:filter(pred) end
 
