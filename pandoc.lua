@@ -431,6 +431,30 @@ pandoc.TableHead = function(rows, attr) end
 pandoc.SimpleTable = function(caption, align, widths, header, rows) end
 
 
+-- Constants.
+pandoc.AuthorInText = 'AuthorInText'
+pandoc.SuppressAuthor = 'SuppressAuthor'
+pandoc.NormalCitation = 'NormalCitation'
+pandoc.DisplayMath = 'DisplayMath'
+pandoc.InlineMath = 'InlineMath'
+pandoc.SingleQuote = 'SingleQuote'
+pandoc.DoubleQuote = 'DoubleQuote'
+pandoc.AlignLeft = 'AlignLeft'
+pandoc.AlignRight = 'AlignRight'
+pandoc.AlignCenter = 'AlignCenter'
+pandoc.DefaultDelim = 'DefaultDelim'
+pandoc.Period = 'Period'
+pandoc.OneParen = 'OneParen'
+pandoc.TwoParens = 'TwoParens'
+pandoc.DefaultStyle = 'DefaultStyle'
+pandoc.Example = 'Example'
+pandoc.Decimal ='Decimal'
+pandoc.LowerRoman = 'LowerRoman'
+pandoc.UpperRoman = 'UpperRoman'
+pandoc.LowerAlpha = 'LowerAlpha'
+pandoc.UpperAlpha = 'UpperAlpha'
+
+
 -- Other constructors ------------------------------------------------------------------------------
 
 ---Creates a new `ReaderOptions` value.
