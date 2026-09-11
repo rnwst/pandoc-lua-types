@@ -334,7 +334,7 @@ function Blocks:walk(filter) end
 ---@class (exact) Table: Walkable
 ---@field attr Attr table attributes
 ---@field caption Caption table caption
----@field colspecs ColSpec column specifications, i.e. alignments and widths
+---@field colspecs ColSpec[] column specifications, i.e. alignments and widths
 ---@field head TableHead table head
 ---@field bodies (List<TableBody> | TableBody[]) table bodies
 ---@field foot TableFoot table foot
@@ -548,7 +548,7 @@ function Inlines:walk(filter) end
 
 ---@alias CitationMode ('AuthorInText' | 'SuppressAuthor' | 'NormalCitation')
 
----@alias ColSpec [Alignment, (number | 'ColWidthDefault')]
+---@alias ColSpec [Alignment, (number | nil)]
 
 ---@class (exact) ListAttributes: Cloneable
 ---@field start integer number of the first list item
